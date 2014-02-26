@@ -12,6 +12,7 @@
     },
     "autoload": {
         "classmap": [
+            "src/models",
             "src/controllers"
         ],
         "psr-0": {

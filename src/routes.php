@@ -3,6 +3,11 @@
 
 //Route::group(array('before' => 'auth'), function()
 //{
-    Route::get('/admin', '\Nifus\AdminPanel\Homepage@Index');
-    Route::resource('/admin/{module}', '\Nifus\AdminPanel\Module');
+    Route::controller('admin', '\Nifus\AdminPanel\Admin');
+
+    Route::group(array('prefix' => 'admin'), function()
+    {
+        Route::controller('table', '\Nifus\AdminPanel\Admin');
+    });
+   // Route::resource('/admin/{module}', '\Nifus\AdminPanel\Module');
 //});
