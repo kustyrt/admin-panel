@@ -1,0 +1,22 @@
+{
+    "name": "nifus/admin-panel",
+    "description": "",
+    "authors": [
+        {
+            "name": "nifus",
+            "email": "nifus@mail.ru"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "classmap": [
+            "src/controllers"
+        ],
+        "psr-0": {
+            "Nifus\\AdminPanel": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
