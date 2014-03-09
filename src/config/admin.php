@@ -1,7 +1,15 @@
 <?php
 
-array(
-    'news'=>array(
+return Array(
+    'admin_folder' => 'admin',
+    'root_page' => '/news',
+    'users' => [
+        [
+            'login' => 'max.khlystov@gmail.com',
+            'password' => 'qweqweqwe'
+        ]
+    ],
+    'news' => array(
         'title' 	=> 	'Новости',
         'prefix'	=>	'news',
         'menu'		=>	array(
