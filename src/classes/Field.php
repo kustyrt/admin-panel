@@ -14,6 +14,10 @@ class Field
         $this->setConfig('title',$title);
         return $this;
     }
+    public function width($width){
+        $this->setConfig('width',$width);
+        return $this;
+    }
 
     public function sort($key,$order){
         $this->setConfig('sort',['key'=>$key,'order'=>$order]);

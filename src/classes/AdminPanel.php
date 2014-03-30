@@ -5,10 +5,7 @@ class AdminPanel
 {
     private
         $config=[
-            'fields',
-            'name','data',
-            'model' => ['instance','name'],
-            'prefix'
+
             ],
         $formbuilder,
         $menu=[];
@@ -122,7 +119,15 @@ class AdminPanel
 
 
 
-
+    public function config($key=''){
+        if ( empty($key) ){
+            return $this->config;
+        }
+        if ( !isset($this->config[$key]) ){
+            throw new ConfigException('Нет ключа '.$key );
+        }
+        return $this->config[$key];
+    }
     protected function setConfig($key,$value){
         if ( empty($key) ){
             throw new ConfigException('Пустой ключ' );
