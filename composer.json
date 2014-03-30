@@ -8,15 +8,25 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "nifus/formbuilder": "0.1.x-dev"
     },
     "autoload": {
         "classmap": [
-            "src/controllers"
+            "src/controllers",
+            "src/classes"
         ],
         "psr-0": {
             "Nifus\\AdminPanel": "src/"
         }
     },
+    "repositories": [
+        
+        {
+            "type": "vcs",
+            "url": "https://github.com/nifus/formbuilder.git"
+        }
+
+    ],
     "minimum-stability": "dev"
 }
