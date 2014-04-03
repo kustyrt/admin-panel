@@ -8,3 +8,4 @@
 
     Route::get('/admin/{module}', '\Nifus\AdminPanel\Main@Listing')->where('module','[A-Za-z\/_0-9]+');
 //});
+

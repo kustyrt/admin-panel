@@ -21,6 +21,8 @@
             <div class="col-md-12">
 
                 <table id="table"></table>
+                <div id="pgwidth"></div>
+
             </div>
 
         </div>
@@ -45,8 +47,7 @@
         var url         = '{{$builder->getJsonUrl()}}';
         var colNames    = {{$builder->getJsonColNames()}};
         var colModel    = {{$builder->getJsonColModel()}};
-        var data        = {{$builder->getJsonData()}};
-        var rowNum      = {{$builder->getJsonRowNum()}};
+        var rowNum      = {{$builder->getRowNum()}};
 
         var options={
             url     : url,
@@ -55,33 +56,13 @@
                 repeatitems : false,
                 id: "0"
             },
-            height:810,
+            height:410,
             width:810,
-            rowNum:10000,
-            //datastr:data,
+            rowList: [10,20,30],
+            pager: '#pgwidth',
             colNames:colNames,
             colModel:colModel
         }
-
-        /*if ( cols.length>2 ){
-         options.width=table_width;
-         options.shrinkToFit=false;
-         }else{
-         options.autowidth=true;
-         }
-
-         options.loadComplete=function(){
-         $('a[data-type]').click(function(){
-         var send_request=[];
-         send_request.type = $(this).attr('data-type');
-         send_request.period = $(this).attr('data-period');
-         send_request.article = $(this).attr('data-article');
-         send_request.category = $(this).attr('data-category');
-         $('#detail_json').val( JSON.stringify(send_request) );
-         })
-
-         }*/
-
         $("#table").jqGrid(options);
     })
 

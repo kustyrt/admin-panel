@@ -8,8 +8,9 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0",
-        "nifus/formbuilder": "0.1.x-dev"
+        "php": ">=5.5.0",
+        "nifus/formbuilder": "0.1.x-dev",
+        "davejamesmiller/laravel-breadcrumbs":"~2.2.0"
     },
     "autoload": {
         "classmap": [

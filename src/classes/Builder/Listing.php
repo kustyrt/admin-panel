@@ -5,7 +5,7 @@ Use \Nifus\AdminPanel\Builder  as Builder ;
 
 class Listing extends Builder
 {
-
+    protected $total;
 
     static function create($config){
         if ( empty($config) ){
@@ -36,7 +36,6 @@ class Listing extends Builder
     }
 
     public function getJsonColModel(){
-        //{name:'id',index:'id', width:55},
         $result = [];
         $fields = $this->panel->config('fields');
         foreach( $fields as $field ){
@@ -47,32 +46,38 @@ class Listing extends Builder
             if ( isset($field['width']) ){
                 $result[$size]['width']= $field['width'];
             }
-
         }
         return json_encode($result,JSON_UNESCAPED_UNICODE);
     }
 
-    public function getJsonData(){
-        $config = $this->panel->config();
-        $data = DataBuilder::create($this->panel);
-        $data->set();
-        $data->set();
-        $data->set();
-        $data->set();
-        $data->get();
-        dd($config);
-        $result = [];
-        return json_encode($result);
+    public function getData(){
+        $model_config = $this->panel->config('model');
+        $model = $model_config['model'];
+        $rows = $model->get();
+        $fields = $this->panel->config('fields');
+        $data = [];
+        $this->total = $model->count();
+        foreach( $rows as $row ){
+            $link = sizeof($data);
+            foreach( $fields as $field ){
+                $field_name = $field['name'];
+                $data[$link][$field_name] = $row->$field_name;
+            }
+        }
+
+        return $data;
     }
 
-    public function getJsonRowNum(){
+    public function getRowNum(){
         return 10;
     }
 
     public function execute(){
-
-
         return \View::make('admin-panel::views.Main.Listing')->with('builder',$this);
+    }
+
+    public function getTotal(){
+        return $this->total;
     }
 
 }
