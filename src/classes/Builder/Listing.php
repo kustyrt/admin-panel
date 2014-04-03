@@ -41,6 +41,7 @@ class Listing extends Builder
         foreach( $fields as $field ){
             $size=sizeof($result);
 
+            $result[$size]['editable']=true;
             $result[$size]['name']=$field['name'];
             $result[$size]['index']='id_'.$field['name'];
             if ( isset($field['width']) ){
@@ -79,6 +80,8 @@ class Listing extends Builder
     public function getTotal(){
         return $this->total;
     }
+
+
 
 }
 

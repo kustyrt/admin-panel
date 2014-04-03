@@ -1,10 +1,9 @@
 <div class="page-head">
-    <h2 class="pull-left"><i class="icon-table"></i> Tables</h2>
+    <h2 class="pull-left"><i class="icon-table"></i> {{$builder->getTitle()}}</h2>
 
     <div class="bread-crumb pull-right">
-        <a href="index.html"><i class="icon-home"></i> Home</a>
-        <span class="divider">/</span>
-        <a href="#" class="bread-current">Dashboard</a>
+        {{ Breadcrumbs::render('ap.item.listing',$builder) }}
+
     </div>
 
     <div class="clearfix"></div>
@@ -61,9 +60,15 @@
             rowList: [10,20,30],
             pager: '#pgwidth',
             colNames:colNames,
-            colModel:colModel
+            colModel:colModel,
+
+            editurl: "server.php",
+            viewrecords: true,
         }
         $("#table").jqGrid(options);
+        $("#table").jqGrid('navGrid',"#pgwidth",{edit:true,add:false,del:false});
+        $("#table").jqGrid('inlineNav',"#pgwidth");
+
     })
 
 

@@ -28,7 +28,6 @@ Class Main extends \BaseController
     }
 
     function Listing($module){
-        \Log::info($module);
         $builder = Builder\Listing::create($module);
         if ( false===$builder ){
             \App::abort(404);

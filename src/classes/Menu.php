@@ -12,11 +12,16 @@ class Menu
 
     function setItem(MenuItem $item)
     {
-
+        $this->arrayMenu[]=$item;
     }
 
     function getMenu()
     {
-        return 'li';
+        $rows = [];
+        foreach( $this->arrayMenu as $menu ){
+            $rows[]=['title'=>$menu->getTitle(),'url'=>$menu->getUrl(),'sub'=>$menu->getSub()];
+        }
+        \Log::info($rows);
+        return $rows;
     }
 }

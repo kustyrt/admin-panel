@@ -10,8 +10,20 @@ class Builder
 
     function __construct( \Nifus\AdminPanel\AdminPanel $panel ){
         $this->panel = $panel;
+        $this->config = $this->panel->config();
     }
 
+    public function config($key = '')
+    {
+        if (empty($key)) {
+            return $this->config;
+        }
+        if (!isset($this->config[$key])) {
+
+            throw new ConfigException('Нет ключа ' . $key);
+        }
+        return $this->config[$key];
+    }
 
     /*
     public function execute(){
@@ -42,4 +54,14 @@ class Builder
         }
         $this->config[$key]=$value;
     }
+
+    public function getTitle(){
+        return $this->config('name');
+    }
+
+    public function getUrl(){
+        return $this->config('config_file');
+    }
+
+
 }

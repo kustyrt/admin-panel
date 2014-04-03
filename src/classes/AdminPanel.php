@@ -14,6 +14,7 @@ class AdminPanel
             $this->setConfig('prefix', $prefix);
         }
         $this->menu = new Menu;
+        $this->registerBreadcrumbs();
     }
 
     protected function setConfig($key, $value)
@@ -39,10 +40,11 @@ class AdminPanel
      * Создаём пункт меню
      *
      */
-    static function createItem($name)
+    static function createItem($name,$title='')
     {
-        $menu = new MenuItem($name);
-        return $menu;
+        $item = new MenuItem($name);
+        $item->title($title);
+        return $item;
     }
 
     static function createField($name)
@@ -57,6 +59,14 @@ class AdminPanel
             $this->menu->setItem($item);
         }
         return $this;
+    }
+
+    public function getMenu(){
+        return $this->menu->getMenu();
+    }
+
+    public function activeMenuItem($item){
+
     }
 
     /**
@@ -123,6 +133,20 @@ class AdminPanel
         return $this;
     }
 
+
+    public function edit($flag){
+        $this->setConfig('edit', $flag);
+        return $this;
+    }
+    public function add($flag){
+        $this->setConfig('add', $flag);
+        return $this;
+    }
+    public function delete($flag){
+        $this->setConfig('delete', $flag);
+        return $this;
+    }
+
     public function editFields($closure)
     {
         $formBuilder = $closure();
@@ -159,4 +183,26 @@ class AdminPanel
             $this->order($key,$value);
         }
     }*/
+
+    private function registerBreadcrumbs()
+    {
+        $aliases = \Config::get('app.aliases');
+        //  Если пакет стоит, то регим  хлебные крошки для стат страниц
+        if ( false===isset($aliases['Breadcrumbs']) ) {
+            return false;
+        }
+
+        \Breadcrumbs::register('ap.dashboard', function($breadcrumbs) {
+            $breadcrumbs->push('Home', '/');
+            $breadcrumbs->push('Dashboard', route('ap.main'));
+        });
+
+        \Breadcrumbs::register('ap.item.listing', function($breadcrumbs,$item) {
+            $breadcrumbs->parent('ap.dashboard');
+            $breadcrumbs->push($item->getTitle(), route('ap.listing',$item->getUrl() ) );
+        });
+
+    }
+
+
 }
