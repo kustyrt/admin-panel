@@ -2,20 +2,19 @@
 Namespace Nifus\AdminPanel;
 
 
-Class Login extends \BaseController
+Class User extends \BaseController
 {
 
     protected $layout = 'admin-panel::views.layout.login';
 
     /**
-     * Форма авторизации
+     * auth form
      *
      * @return mixed
      */
-    function Index(){
-        // генерируем формы
+    function Login(){
         $form = \Nifus\FormBuilder\FormBuilder::create('auth_form')
-            ->setRender('array')->setExtensions(['Placeholder'])
+            ->setRender('array')->setExtensions(['Placeholder','Validetta'])
             ->setFields([
                 \Nifus\FormBuilder\FormBuilder::createField('text')
                     ->setName('email')->setLabel( trans('admin-panel::admin.email') )
@@ -23,7 +22,7 @@ Class Login extends \BaseController
 
                 \Nifus\FormBuilder\FormBuilder::createField('password')
                     ->setName('pass')->setLabel( trans('admin-panel::admin.pass') )
-                    ->setClass('form-control')->setValid(['min:6'],trans('admin-panel::admin.pass_error') ),
+                    ->setClass('form-control')->setValid(['min:4'],trans('admin-panel::admin.pass_error') ),
 
                 \Nifus\FormBuilder\FormBuilder::createField('checkbox')
                     ->setName('remember_me')->setOptions(['1'=>trans('admin-panel::admin.remember_me')]),
@@ -34,10 +33,12 @@ Class Login extends \BaseController
         if ( $form->isSubmit() && true!==$form->fails()  ){
             try {
                 $credentials = array(
-                                'login'    => \Input::get('email'),
+                                'email'    => \Input::get('email'),
                                 'password' => \Input::get('pass')
                 );
-                $user = \Sentry::authenticate($credentials, \Input::get('button_input'));
+                \Log::info($credentials);
+
+                $user = \Sentry::authenticate($credentials, false);
                 \Event::fire('user.login', $user);
                 return \Redirect::route('ap.main');
             }catch (\Exception $e) {
@@ -48,32 +49,12 @@ Class Login extends \BaseController
     }
 
 
-    function Json($module,$action){
-        $builder = Builder\Listing::create($module);
-        if ( false===$builder ){
-            \App::abort(404);
-        }
-        $response = [
-            'page'=> (\Input::has('page') ? \Input::get('page') : 1),
-            'rows'=> $builder->getData($action),
-            'total'=> $builder->getTotal(),
-            'records'=> $builder->getRowNum()
-        ];
-
-
-        return \Response::json($response);
+    function Logout(){
+        \Event::fire('user.logout', \Sentry::getUser());
+        \Sentry::logout();
+        return \Redirect::route('ap.login');
     }
 
-    function Listing($module){
-        $builder = Builder\Listing::create($module);
-        if ( false===$builder ){
-            \App::abort(404);
-        }
-        $this->layout->content =  $builder->execute();
-    }
 
-    function Edit(){
-
-    }
 
 }

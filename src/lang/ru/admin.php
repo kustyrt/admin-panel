@@ -1,6 +1,6 @@
 <?php
-\Log::info('1212');
 return [
+        //  login.php
     'email' => 'Email',
     'email_error' => 'Нужно правильно заполнить поле Email',
     'pass' => 'Пароль',
@@ -8,4 +8,7 @@ return [
     'remember_me' => 'Запомнить меня',
     'input' => 'Вход',
     'error_auth' => 'Такого пользователя не существует',
+
+        //  login.blade.php
+    'title' => 'Авторизация',
 ];

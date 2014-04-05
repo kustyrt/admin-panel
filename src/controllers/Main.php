@@ -8,7 +8,7 @@ Class Main extends \BaseController
     protected $layout = 'admin-panel::views.layout.Index';
 
     function Homepage(){
-        return \View::make('admin-panel::views/homepage/Index');
+        $this->layout->content = \View::make('admin-panel::views/Main/Homepage');
     }
 
     function Json($module,$action){

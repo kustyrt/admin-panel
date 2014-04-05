@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
   <!-- Title and other stuffs -->
-  <title>Login - MacAdmin</title>
+  <title>{{ trans('admin-panel::admin.title') }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="keywords" content="">
@@ -37,7 +37,7 @@
             <div class="widget worange">
               <!-- Widget head -->
               <div class="widget-head">
-                <i class="icon-lock"></i> Авторизация
+                <i class="icon-lock"></i> {{ trans('admin-panel::admin.title') }}
               </div>
 
               <div class="widget-content">
@@ -49,14 +49,14 @@
                   <form class="form-horizontal" method="post" id="auth_form">
                     <!-- Email -->
                     <div class="form-group">
-                      <label class="control-label col-lg-3" for="inputEmail">Email</label>
+                      <label class="control-label col-lg-3" for="inputEmail">{{ trans('admin-panel::admin.email') }}</label>
                       <div class="col-lg-9">
                           {{$form->field('email')}}
                       </div>
                     </div>
                     <!-- Password -->
                     <div class="form-group">
-                      <label class="control-label col-lg-3" for="inputPassword">Пароль</label>
+                      <label class="control-label col-lg-3" for="inputPassword">{{ trans('admin-panel::admin.pass') }}</label>
                       <div class="col-lg-9">
                           {{$form->field('pass')}}
 
