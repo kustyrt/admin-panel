@@ -18,9 +18,11 @@ class AdminPanelServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-        require __DIR__ . '/../../routes.php';
-		//$this->package('nifus/admin');
         \View::addNamespace('admin-panel', dirname( __FILE__ ) . "/../..");
+        \Lang::addNamespace('admin-panel', dirname( __FILE__ ) . "/../../lang");
+        require __DIR__ . '/../../routes.php';
+        require __DIR__ . '/../../filters.php';
+		//$this->package('nifus/admin');
 
     }
 
@@ -42,7 +44,7 @@ class AdminPanelServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		//return array('nifus');
+		//return array('admin-panel');
 	}
 
 }

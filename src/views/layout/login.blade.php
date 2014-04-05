@@ -11,18 +11,18 @@
   <meta name="author" content="">
 
   <!-- Stylesheets -->
-  <link href="style/bootstrap.css" rel="stylesheet">
-  <link rel="stylesheet" href="style/font-awesome.css">
-  <link href="style/style.css" rel="stylesheet">
-  <link href="style/bootstrap-responsive.css" rel="stylesheet">
+  <link href="{{asset('packages/nifus/admin-panel/style/bootstrap.css')}}" rel="stylesheet">
+  <link rel="stylesheet" href="{{asset('packages/nifus/admin-panel/style/font-awesome.css')}}">
+  <link href="{{asset('packages/nifus/admin-panel/style/style.css')}}" rel="stylesheet">
+  <link href="{{asset('packages/nifus/admin-panel/style/bootstrap-responsive.css')}}" rel="stylesheet">
   
   <!-- HTML5 Support for IE -->
   <!--[if lt IE 9]>
-  <script src="js/html5shim.js"></script>
+  <script src="{{asset('packages/nifus/admin-panel/js/html5shim.js')}}"></script>
   <![endif]-->
 
   <!-- Favicon -->
-  <link rel="shortcut icon" href="img/favicon/favicon.png">
+  <link rel="shortcut icon" href="{{asset('packages/nifus/admin-panel/img/favicon/favicon.png')}}">
 </head>
 
 <body>
@@ -37,40 +37,42 @@
             <div class="widget worange">
               <!-- Widget head -->
               <div class="widget-head">
-                <i class="icon-lock"></i> Login 
+                <i class="icon-lock"></i> Авторизация
               </div>
 
               <div class="widget-content">
                 <div class="padd">
-                  <!-- Login form -->
-                  <form class="form-horizontal">
+                    @if ( $form->error() )
+                    <div class="alert alert-danger">{{$form->error()}}</div>
+                    @endif
+                    <!-- Login form -->
+                  <form class="form-horizontal" method="post" id="auth_form">
                     <!-- Email -->
                     <div class="form-group">
                       <label class="control-label col-lg-3" for="inputEmail">Email</label>
                       <div class="col-lg-9">
-                        <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                          {{$form->field('email')}}
                       </div>
                     </div>
                     <!-- Password -->
                     <div class="form-group">
-                      <label class="control-label col-lg-3" for="inputPassword">Password</label>
+                      <label class="control-label col-lg-3" for="inputPassword">Пароль</label>
                       <div class="col-lg-9">
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                          {{$form->field('pass')}}
+
                       </div>
                     </div>
-                    <!-- Remember me checkbox and sign in button -->
                     <div class="form-group">
 					<div class="col-lg-9 col-lg-offset-3">
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox"> Remember me
+                            {{$form->field('remember_me')}}
                         </label>
 						</div>
 					</div>
 					</div>
                         <div class="col-lg-9 col-lg-offset-2">
-							<button type="submit" class="btn btn-danger">Sign in</button>
-							<button type="reset" class="btn btn-default">Reset</button>
+							{{$form->field('button_input')}}
 						</div>
                     <br />
                   </form>
@@ -78,19 +80,19 @@
 				</div>
                 </div>
               
-                <div class="widget-foot">
-                  Not Registred? <a href="#">Register here</a>
-                </div>
+
             </div>  
       </div>
     </div>
   </div> 
 </div>
-	
-		
+
+
+{{$form->css()}}
 
 <!-- JS -->
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap.js"></script>
+<script src="{{asset('packages/nifus/admin-panel/js/jquery.js')}}"></script>
+{{$form->js()}}
+
 </body>
 </html>

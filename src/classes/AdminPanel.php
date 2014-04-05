@@ -61,6 +61,14 @@ class AdminPanel
         return $this;
     }
 
+
+    public function access( $access,$group,$user=0 )
+    {
+        $this->setConfig('access',['group'=>$group,'access'=>$access,'user'=>$user]);
+        return $this;
+    }
+
+
     public function getMenu(){
         return $this->menu->getMenu();
     }

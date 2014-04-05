@@ -4,6 +4,16 @@ namespace Nifus\AdminPanel;
 class Helper
 {
 
+    /**
+     *
+     * @return \Nifus\AdminPanel\AdminPanel
+     */
+    static function Config(){
+        $config = require app_path().'/config/packages/nifus/admin-panel/structure.php';
+        $structure = $config();
+        return $structure;
+    }
+
     static function CheckPrefix($prefix){
         if ( empty($prefix) ){
             return false;
