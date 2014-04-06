@@ -14,18 +14,15 @@
 <div class="matter">
     <div class="container">
 
+        <div class="alert alert-danger hide" id="message">...</div>
 
-        <div class="row">
-
+        <div class="row" id="listing">
             <div class="col-md-12">
-
                 <table id="table"></table>
                 <div id="pgwidth"></div>
-
             </div>
-
         </div>
-
+        <div id="edit_form"></div>
 
     </div>
 </div>
@@ -43,6 +40,10 @@
 
 <script type="text/javascript">
     $(function(){
+        Ap.init();
+        Ap.initEditForm(
+            { 'url': '{{route('ap.json.edit_url',['module'=>$builder->config('config_file')])}}'}
+        )
         var url         = '{{$builder->getJsonUrl()}}';
         var colNames    = {{$builder->getJsonColNames()}};
         var colModel    = {{$builder->getJsonColModel()}};
@@ -60,14 +61,44 @@
             rowList: [10,20,30],
             pager: '#pgwidth',
             colNames:colNames,
-            colModel:colModel,
+            colModel:colModel
 
-            editurl: "server.php",
-            viewrecords: true,
         }
-        $("#table").jqGrid(options);
-        $("#table").jqGrid('navGrid',"#pgwidth",{edit:true,add:false,del:false});
-        $("#table").jqGrid('inlineNav',"#pgwidth");
+
+        @if ( true===$builder->config('custom_edit') )
+            options.onSelectRow = function(id){
+                //alert(id)
+                Ap.editRow(id);
+                /*if(id && id!==lastsel2){
+                    jQuery('#rowed5').jqGrid('restoreRow',lastsel2);
+                    jQuery('#rowed5').jqGrid('editRow',id,true);
+                    lastsel2=id;
+                }*/
+            };
+            /*options.gridComplete= function(){
+
+                var ids = $("#table").jqGrid('getDataIDs');
+                for(var i=0;i < ids.length;i++){
+                    var cl = ids[i];
+                    be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"$('#table').editRow('"+cl+"');\"  />";
+                    se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"$('#table').saveRow('"+cl+"');\"  />";
+                    ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"$('#table').restoreRow('"+cl+"');\" />";
+                    $("#table").jqGrid('setRowData',ids[i],{act:be+se+ce});
+                }
+            };*/
+            $("#table").jqGrid(options);
+        @else
+            @if (true==$builder->config('fast_edit') )
+                options.editurl = "server.php";
+                options.viewrecords = true;
+                $("#table").jqGrid(options);
+
+                $("#table").jqGrid('navGrid',"#pgwidth",{edit:true,add:false,del:false});
+                $("#table").jqGrid('inlineNav',"#pgwidth");
+            @endif
+        @endif
+
+
 
     })
 

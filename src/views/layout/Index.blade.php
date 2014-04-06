@@ -18,11 +18,11 @@
   <link rel="stylesheet" href="{{asset('packages/nifus/admin-panel/style/rateit.css')}}">
   <link rel="stylesheet" href="{{asset('packages/nifus/admin-panel/style/bootstrap-datetimepicker.min.css')}}">
   <link rel="stylesheet" href="{{asset('packages/nifus/admin-panel/style/jquery.cleditor.css')}}">
-  <link rel="stylesheet" href="{{asset('packages/nifus/admin-panel/style/uniform.default.css')}}">
   <link rel="stylesheet" href="{{asset('packages/nifus/admin-panel/style/bootstrap-switch.css')}}">
   <link href="{{asset('packages/nifus/admin-panel/style/style.css')}}" rel="stylesheet">
   <link href="{{asset('packages/nifus/admin-panel/style/widgets.css')}}" rel="stylesheet">
   <script src="{{asset('packages/nifus/admin-panel/js/jquery.js')}}"></script>
+  <script src="{{asset('packages/nifus/admin-panel/js/core/ap.js')}}"></script>
 
 
   <!--[if lt IE 9]>
@@ -102,7 +102,6 @@
 <script src="{{asset('packages/nifus/admin-panel/js/sparklines.js')}}"></script> <!-- Sparklines -->
 <script src="{{asset('packages/nifus/admin-panel/js/jquery.cleditor.min.js')}}"></script> <!-- CLEditor -->
 <script src="{{asset('packages/nifus/admin-panel/js/bootstrap-datetimepicker.min.js')}}"></script> <!-- Date picker -->
-<script src="{{asset('packages/nifus/admin-panel/js/jquery.uniform.min.js')}}"></script> <!-- jQuery Uniform -->
 <script src="{{asset('packages/nifus/admin-panel/js/bootstrap-switch.min.js')}}"></script> <!-- Bootstrap Toggle -->
 <script src="{{asset('packages/nifus/admin-panel/js/filter.js')}}"></script> <!-- Filter for support page -->
 <script src="{{asset('packages/nifus/admin-panel/js/custom.js')}}"></script> <!-- Custom codes -->

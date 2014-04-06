@@ -5,7 +5,7 @@ class AdminPanel
 {
     private
         $config = [],
-        $formbuilder,
+        //$formbuilder,
         $menu = [];
 
     function __construct($prefix = '')
@@ -91,9 +91,10 @@ class AdminPanel
             throw new ConfigException('Класс ' . $class_name . ' не найден');
         }
         $model = new $class_name;
+        $key=$model->getKeyName();
         $model = $closure($model);
 
-        $this->setConfig('model', ['name' => $class_name,'model'=>$model]);
+        $this->setConfig('model', ['name' => $class_name,'model'=>$model,'key'=>$key]);
 
 
         return $this;
@@ -144,24 +145,35 @@ class AdminPanel
 
     public function edit($flag){
         $this->setConfig('edit', $flag);
+        $this->setConfig('fast_edit', true);
+
         return $this;
     }
     public function add($flag){
         $this->setConfig('add', $flag);
+        $this->setConfig('fast_edit', true);
+
         return $this;
     }
     public function delete($flag){
         $this->setConfig('delete', $flag);
+        $this->setConfig('fast_edit', true);
+
         return $this;
     }
 
     public function editFields($closure)
     {
+        $this->setConfig('custom_edit', true);
+
         $formBuilder = $closure();
+        /*dd( var_dump($formBuilder) );
         if (!$formBuilder instanceof  \Nifus\FormBuilder\FormBuilder) {
             throw new ConfigException('\Nifus\FormBuilder\FormBuilder ');
-        }
+        }*/
         $this->formbuilder = $formBuilder;
+        $this->setConfig('formbuilder', $formBuilder);
+
         return $this;
     }
 

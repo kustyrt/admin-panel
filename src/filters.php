@@ -3,7 +3,7 @@
 
 
 Route::filter('ap.auth', function() {
-    $structure = \Nifus\AdminPanel\Helper::Config();
+    $structure = \Nifus\AdminPanel\Helper::loadConfig('structure');
     $auth_config = $structure->config('access');
 
     if ( true===$auth_config['access'] ){

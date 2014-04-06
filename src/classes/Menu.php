@@ -10,6 +10,7 @@ class Menu
         //$this->arrayMenu[$name]=[];
     }
 
+
     function setItem(MenuItem $item)
     {
         $this->arrayMenu[]=$item;
@@ -21,7 +22,6 @@ class Menu
         foreach( $this->arrayMenu as $menu ){
             $rows[]=['title'=>$menu->getTitle(),'url'=>$menu->getUrl(),'sub'=>$menu->getSub()];
         }
-        \Log::info($rows);
         return $rows;
     }
 }

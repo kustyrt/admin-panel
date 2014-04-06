@@ -8,16 +8,11 @@ class Listing extends Builder
     protected $total;
 
     static function create($config){
-        if ( empty($config) ){
-            return false;
-        }
-        if ( !file_exists(app_path().'/config/packages/nifus/admin-panel/classes/'.$config.'.php') ){
-            return false;
-        }
-        $closure = require app_path().'/config/packages/nifus/admin-panel/classes/'.$config.'.php';
-        $result = $closure();
+        $result = \Nifus\AdminPanel\Helper::loadConfig('classes/'.$config);
+
+
         if ( !$result instanceof \Nifus\AdminPanel\AdminPanel ){
-            throw new ConfigException('Ошибка чтения конфиг-файла. Должен быть возвращён объёкт \Nifus\AdminPanel\AdminPanel');
+            return false;
         }
         $builder = new Builder\Listing($result);
         $builder->setConfig('action','listing');
@@ -38,15 +33,21 @@ class Listing extends Builder
     public function getJsonColModel(){
         $result = [];
         $fields = $this->panel->config('fields');
+        $model = $this->panel->config('model');
         foreach( $fields as $field ){
             $size=sizeof($result);
 
             $result[$size]['editable']=true;
             $result[$size]['name']=$field['name'];
-            $result[$size]['index']='id_'.$field['name'];
+            $result[$size]['index']=$field['name'];
             if ( isset($field['width']) ){
                 $result[$size]['width']= $field['width'];
             }
+            if  (isset($model['key']) && $model['key']==$field['name'] ){
+                $result[$size]['key']= true;
+            }
+
+            //key
         }
         return json_encode($result,JSON_UNESCAPED_UNICODE);
     }

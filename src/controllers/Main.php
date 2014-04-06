@@ -22,8 +22,6 @@ Class Main extends \BaseController
             'total'=> $builder->getTotal(),
             'records'=> $builder->getRowNum()
         ];
-
-
         return \Response::json($response);
     }
 

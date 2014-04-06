@@ -19,12 +19,11 @@ class MenuItem
     }
     public function sub($sub_menu){
         foreach( $sub_menu as $menu ){
-            \Log::info($menu);
             $builder = Builder\Listing::create($menu);
             if ( false===$builder ){
                 continue;
             }
-            $this->sub[]=['title'=>$builder->getTitle(),'url'=>$builder->getUrl()];
+            $this->sub[]=['title'=>$builder->getTitle(),'url'=>route('ap.listing',$builder->getUrl())];
         }
         return $this;
     }
@@ -36,7 +35,7 @@ class MenuItem
         return $this->title;
     }
     public function getUrl(){
-        return $this->title;
+        return $this->name;
     }
     public function getSub(){
         return  $this->sub;

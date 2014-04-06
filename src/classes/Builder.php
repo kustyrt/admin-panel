@@ -19,8 +19,8 @@ class Builder
             return $this->config;
         }
         if (!isset($this->config[$key])) {
-
-            throw new ConfigException('Нет ключа ' . $key);
+            return null;
+            //throw new ConfigException('Нет ключа ' . $key);
         }
         return $this->config[$key];
     }

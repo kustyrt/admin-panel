@@ -6,10 +6,14 @@ class Helper
 
     /**
      *
-     * @return \Nifus\AdminPanel\AdminPanel
      */
-    static function Config(){
-        $config = require app_path().'/config/packages/nifus/admin-panel/structure.php';
+    static function loadConfig($file){
+        $file = app_path().'/config/packages/nifus/admin-panel/'.$file.'.php';
+        if ( !file_exists($file) ){
+            return false;
+        }
+        $config = require $file;
+
         $structure = $config();
         return $structure;
     }
