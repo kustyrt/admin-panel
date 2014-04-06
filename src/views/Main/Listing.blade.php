@@ -17,6 +17,12 @@
         <div class="alert alert-danger hide" id="message">...</div>
 
         <div class="row" id="listing">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <button type="button" class="btn btn-default" id="listing_add_button">Добавить</button>
+                </div>
+            </div>
+
             <div class="col-md-12">
                 <table id="table"></table>
                 <div id="pgwidth"></div>
@@ -42,7 +48,10 @@
     $(function(){
         Ap.init();
         Ap.initEditForm(
-            { 'url': '{{route('ap.json.edit_url',['module'=>$builder->config('config_file')])}}'}
+            {
+                'url': '{{route('ap.json.edit_url',['module'=>$builder->config('config_file')])}}',
+                'delete_url' :'{{route('ap.json.delete_url',['module'=>$builder->config('config_file')])}}'
+            }
         )
         var url         = '{{$builder->getJsonUrl()}}';
         var colNames    = {{$builder->getJsonColNames()}};

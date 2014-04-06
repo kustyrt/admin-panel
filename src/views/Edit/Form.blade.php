@@ -3,6 +3,7 @@
         <button type="button" class="btn btn-default" id="edit_back_button">Назад</button>
         <button type="button" class="btn btn-default"  id="edit_refresh_button">Обновить</button>
         <button type="button" class="btn btn-default"  id="edit_save_button">Сохранить</button>
+        <button type="button" class="btn btn-default"  id="edit_del_button">Удалить</button>
     </div>
 </div>
 
@@ -15,7 +16,7 @@
 @endif
 </div>
 
-<div class="alert alert-danger hide" id="{{ $form->name_form }}Message">...</div>
+<div class="alert alert-danger hide" id="{{ $form->form_name }}Message">...</div>
 
 <div class="panel panel-default">
     <div class="panel-body">
@@ -27,7 +28,8 @@
         Ap.initEditForm(
             {
                 'id': {{$id}},
-                'form' : '{{ $form->form_name }}'
+                'form' : '{{ $form->form_name }}',
+
             }
         )
     })

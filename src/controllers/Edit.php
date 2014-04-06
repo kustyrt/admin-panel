@@ -11,31 +11,43 @@ Class Edit extends \BaseController
         $id = \Input::has('id') ? \Input::get('id') : null;
         $builder = \Nifus\AdminPanel\Helper::loadConfig('classes/'.$module);
 
-
         $form = $builder->config('formbuilder');
         $form->setId($id);
+        $form->set('ajax',['url'=>route('ap.json.edit_url',['module'=>$module]) ]);
         if ( $form->isSubmit() && true!==$form->fails()  ){
-            try {
-                $credentials = array(
-                    'email'    => \Input::get('email'),
-                    'password' => \Input::get('pass')
-                );
-                \Log::info($credentials);
 
-                $user = \Sentry::authenticate($credentials, false);
-                \Event::fire('user.login', $user);
-                return \Redirect::route('ap.main');
-            }catch (\Exception $e) {
-                $form->setError(trans('admin-panel::admin.error_auth'));
-            }
+
+            $form->save();
+            return \Response::json(
+                [
+                    'msg'=>'Изменения сохранены'
+                ]
+            );
         }
        // \Log::info($form->render());
         return \Response::json(
             [
                 'content'=>\View::make('admin-panel::views/Edit/Form')
+                        ->with('module',$module)
                         ->with('form',$form)
                         ->with('id',$id)
                         ->render()
+            ]
+        );
+    }
+
+    function Delete($module){
+        $id = \Input::has('id') ? \Input::get('id') : null;
+        $builder = \Nifus\AdminPanel\Helper::loadConfig('classes/'.$module);
+        $model_config = $builder->config('model');
+        $model = $model_config['name'];
+        $object = $model::find($id);
+        if ( !is_null($object) ){
+            $object->delete();
+        }
+        return \Response::json(
+            [
+                'msg'=>'Изменения сохранены'
             ]
         );
     }
