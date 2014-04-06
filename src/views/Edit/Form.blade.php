@@ -15,18 +15,22 @@
 @endif
 </div>
 
+<div class="alert alert-danger hide" id="{{ $form->name_form }}Message">...</div>
+
 <div class="panel panel-default">
     <div class="panel-body">
         {{$form->render()}}    </div>
 </div>
 
 <script type="text/javascript">
+    $(function(){
+        Ap.initEditForm(
+            {
+                'id': {{$id}},
+                'form' : '{{ $form->form_name }}'
+            }
+        )
+    })
+    </script>
 
-    Ap.initEditForm(
-        {
-            'id': {{$id}},
-            'form' : '{{ $form->name_form }}'
-        }
-    )
-</script>
 

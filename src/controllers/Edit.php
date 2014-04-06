@@ -14,7 +14,21 @@ Class Edit extends \BaseController
 
         $form = $builder->config('formbuilder');
         $form->setId($id);
+        if ( $form->isSubmit() && true!==$form->fails()  ){
+            try {
+                $credentials = array(
+                    'email'    => \Input::get('email'),
+                    'password' => \Input::get('pass')
+                );
+                \Log::info($credentials);
 
+                $user = \Sentry::authenticate($credentials, false);
+                \Event::fire('user.login', $user);
+                return \Redirect::route('ap.main');
+            }catch (\Exception $e) {
+                $form->setError(trans('admin-panel::admin.error_auth'));
+            }
+        }
        // \Log::info($form->render());
         return \Response::json(
             [
