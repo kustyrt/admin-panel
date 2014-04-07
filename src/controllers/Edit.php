@@ -12,7 +12,9 @@ Class Edit extends \BaseController
         $builder = \Nifus\AdminPanel\Helper::loadConfig('classes/'.$module);
 
         $form = $builder->config('formbuilder');
+
         $form->setId($id);
+
         $form->set('ajax',['url'=>route('ap.json.edit_url',['module'=>$module]) ]);
         if ( $form->isSubmit() && true!==$form->fails()  ){
 
