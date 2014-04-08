@@ -183,9 +183,20 @@ class AdminPanel
             return $this->config;
         }
         if (!isset($this->config[$key])) {
-            throw new ConfigException('Нет ключа ' . $key);
+            return null;
+            //throw new ConfigException('Нет ключа ' . $key);
         }
         return $this->config[$key];
+    }
+
+    public function includeJs($file){
+        $files = $this->config('js');
+        $files = is_array($files) ? $files : [];
+        if ( !in_array($file,$files) ){
+            $files[]=$file;
+        }
+        $this->setConfig('js', $files);
+        return $this;
     }
     /*
     public function order($key,$value){

@@ -106,6 +106,6 @@
 <script src="{{asset('packages/nifus/admin-panel/js/filter.js')}}"></script> <!-- Filter for support page -->
 <script src="{{asset('packages/nifus/admin-panel/js/custom.js')}}"></script> <!-- Custom codes -->
 <script src="{{asset('packages/nifus/admin-panel/js/charts.js')}}"></script> <!-- Charts & Graphs -->
-
+    {{$js}}
 </body>
 </html>

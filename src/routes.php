@@ -36,3 +36,17 @@ View::composer('admin-panel::views.layout.Index', function($view)
     $menu  = \View::make('admin-panel::views.layout.inc.user')->with('user',$user);
     $view->with('user_menu', $menu);
 });
+
+
+View::composer('admin-panel::views.layout.Index', function($view)
+{
+    $structure = \Nifus\AdminPanel\Helper::loadConfig('structure');
+    $files = $structure->config('js');
+    $html = '';
+    foreach( $files as $file ){
+        $html.=\HTML::script($file);
+    }
+
+    $view->with('js', $html);
+
+});
