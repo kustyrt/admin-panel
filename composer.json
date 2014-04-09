@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0",
+        "php": ">=5.4.0",
         "nifus/formbuilder": "0.1.x-dev",
         "davejamesmiller/laravel-breadcrumbs":"~2.2.0",
         "cartalyst/sentry": "2.1.*"
