@@ -3,9 +3,10 @@
 
 
 Route::filter('ap.auth', function() {
-    $structure = \Nifus\AdminPanel\Helper::loadConfig('structure');
-    $auth_config = $structure->config('access');
 
+    $structure = \Nifus\AdminPanel\Helper::loadConfig('structure');
+
+    $auth_config = $structure->config('access');
     if ( true===$auth_config['access'] ){
         $user = Sentry::getUser();
 

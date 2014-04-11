@@ -166,13 +166,13 @@ class AdminPanel
     {
         $this->setConfig('custom_edit', true);
 
-        $formBuilder = $closure();
+        //$formBuilder = $closure();
         /*dd( var_dump($formBuilder) );
         if (!$formBuilder instanceof  \Nifus\FormBuilder\FormBuilder) {
             throw new ConfigException('\Nifus\FormBuilder\FormBuilder ');
         }*/
-        $this->formbuilder = $formBuilder;
-        $this->setConfig('formbuilder', $formBuilder);
+        $this->formbuilder = $closure;
+        $this->setConfig('formbuilder', $closure);
 
         return $this;
     }

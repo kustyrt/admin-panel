@@ -9,10 +9,12 @@ Class Edit extends \BaseController
 
     function Form($module){
         $id = \Input::has('id') ? \Input::get('id') : null;
+
+
         $builder = \Nifus\AdminPanel\Helper::loadConfig('classes/'.$module);
 
         $form = $builder->config('formbuilder');
-
+        $form = $form();
         $form->setId($id);
 
         $form->set('ajax',['url'=>route('ap.json.edit_url',['module'=>$module]) ]);
@@ -26,7 +28,8 @@ Class Edit extends \BaseController
                 ]
             );
         }
-       // \Log::info($form->render());
+
+        // \Log::info($form->render());
         return \Response::json(
             [
                 'content'=>\View::make('admin-panel::views/Edit/Form')

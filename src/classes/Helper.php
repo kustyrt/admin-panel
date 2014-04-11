@@ -13,7 +13,6 @@ class Helper
             return false;
         }
         $config = require $file;
-
         $structure = $config();
         return $structure;
     }
