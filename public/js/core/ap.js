@@ -75,6 +75,8 @@ var Ap={
                     $('#message').html(answer.msg).show();
                 }
                 $('#edit_form').html(answer.content).show();
+                $("body").trigger("load_edit_page", [ "id" ]);
+                alert(1)
             }
         });
 

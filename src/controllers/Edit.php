@@ -9,6 +9,7 @@ Class Edit extends \BaseController
 
     function Form($module){
         $id = \Input::has('id') ? \Input::get('id') : null;
+       // $submit_js = \Input::has('submit_js') ? \Input::get('submit_js') : null;
 
 
         $builder = \Nifus\AdminPanel\Helper::loadConfig('classes/'.$module);
