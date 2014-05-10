@@ -23,6 +23,8 @@
   <link href="{{asset('packages/nifus/admin-panel/style/widgets.css')}}" rel="stylesheet">
   <script src="{{asset('packages/nifus/admin-panel/js/jquery.js')}}"></script>
   <script src="{{asset('packages/nifus/admin-panel/js/core/ap.js')}}"></script>
+    <link href="{{asset('packages/nifus/admin-panel/style/yamm.css')}}" rel="stylesheet">
+
 
 
   <!--[if lt IE 9]>
@@ -34,27 +36,21 @@
 
 <body>
 
-<div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
-  
-    <div class="conjtainer">
+<nav class="navbar navbar-fixed-top bs-docs-nav yamm navbar-default " role="banner">
 
-        <div class="col-md-8">
-            <div class="logo">
-                <h1><a href="{{route('ap.main')}}">GTS <span class="bold">back office</span></a></h1>
+
+
+
+            <div class="col-md-3">
+                <div class="logo">
+                    <h1><a href="{{route('ap.main')}}">GTS <span class="bold">back office</span></a></h1>
+                </div>
             </div>
+            {{$menu_left}}
 
-        </div>
-      
+            {{$user_menu}}
 
-      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-
-        {{$user_menu}}
-
-
-      </nav>
-
-    </div>
-  </div>
+  </nav>
 
 
 
@@ -63,15 +59,11 @@
 
 <div class="content">
 
-  	<!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-dropdown"><a href="#">Navigation</a></div>
-        {{$menu_left}}
-    </div>
+
     <!-- Main bar -->
     <div class="mainbar">
     {{$content}}
-
+    </div>
 
    <div class="clearfix"></div>
 
@@ -107,5 +99,11 @@
 <script src="{{asset('packages/nifus/admin-panel/js/custom.js')}}"></script> <!-- Custom codes -->
 <script src="{{asset('packages/nifus/admin-panel/js/charts.js')}}"></script> <!-- Charts & Graphs -->
     {{$js}}
+
+    <script type="text/javascript">
+        $(document).on('click', '.yamm .dropdown-menu', function(e) {
+            e.stopPropagation()
+        })
+    </script>
 </body>
 </html>
