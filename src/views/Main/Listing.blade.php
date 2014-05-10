@@ -66,7 +66,8 @@
                 id: "0"
             },
             height:410,
-            width:1050,
+            //width:1050,
+            autowidth: true,
             rowList: [10,20,30],
             pager: '#pgwidth',
             colNames:colNames,

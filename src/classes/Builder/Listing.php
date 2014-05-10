@@ -6,6 +6,8 @@ Use \Nifus\AdminPanel\Builder  as Builder ;
 class Listing extends Builder
 {
     protected $total;
+    protected $on_page=10;
+    protected $page;
 
     static function create($config){
         $result = \Nifus\AdminPanel\Helper::loadConfig('classes/'.$config);
@@ -55,10 +57,16 @@ class Listing extends Builder
     public function getData(){
         $model_config = $this->panel->config('model');
         $model = $model_config['model'];
-        $rows = $model->get();
+        $this->total = $model->count();
+        $rows = $model->take($this->getRowNum())->skip(($this->page-1)*$this->getRowNum());
+
+        //\Log::info($this->page);
+        //\Log::info($rows->getQuery()->toSql());
+
+        $rows = $rows
+            ->get();
         $fields = $this->panel->config('fields');
         $data = [];
-        $this->total = $model->count();
         foreach( $rows as $row ){
             $link = sizeof($data);
             foreach( $fields as $field ){
@@ -71,7 +79,7 @@ class Listing extends Builder
     }
 
     public function getRowNum(){
-        return 10;
+        return $this->on_page;
     }
 
     public function execute(){
@@ -80,6 +88,12 @@ class Listing extends Builder
 
     public function getTotal(){
         return $this->total;
+    }
+    public function setPage($page){
+        return $this->page=$page;
+    }
+    public function setOnPage($count){
+        return $this->on_page=$count;
     }
 
 

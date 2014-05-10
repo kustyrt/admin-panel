@@ -13,6 +13,9 @@ Class Main extends \BaseController
 
     function Json($module,$action){
         $builder = Builder\Listing::create($module);
+        $builder->setPage( \Input::get('page') );
+        $builder->setOnPage( \Input::get('rows') );
+
         if ( false===$builder ){
             \App::abort(404);
         }
