@@ -21,7 +21,6 @@ Class Edit extends \BaseController
         $form->set('ajax',['url'=>route('ap.json.edit_url',['module'=>$module]) ]);
         if ( $form->isSubmit() && true!==$form->fails()  ){
 
-
             $form->save();
             return \Response::json(
                 [
