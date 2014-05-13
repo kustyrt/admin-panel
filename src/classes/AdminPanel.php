@@ -103,10 +103,10 @@ class AdminPanel
         }
         $model = new $class_name;
         $key=$model->getKeyName();
-        $model = $closure($model);
-
+        if ( !empty($closure) ){
+            $model = $closure($model);
+        }
         $this->setConfig('model', ['name' => $class_name,'model'=>$model,'key'=>$key]);
-
 
         return $this;
     }
