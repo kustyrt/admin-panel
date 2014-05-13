@@ -68,6 +68,17 @@ class AdminPanel
         return $this;
     }
 
+    /**
+     * Название админки
+     * @param $name
+     * @return $this
+     */
+    public function name( $name)
+    {
+        $this->setConfig('name',$name);
+        return $this;
+    }
+
 
     public function getMenu(){
         return $this->menu->getMenu();

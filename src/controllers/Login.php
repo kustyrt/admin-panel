@@ -29,15 +29,13 @@ Class User extends \BaseController
                 \Nifus\FormBuilder\FormBuilder::createField('button')->setName('button_input')
                     ->setValue( trans('admin-panel::admin.input') )->setClass('btn btn-danger')->setType('submit')
             ]);
-
         if ( $form->isSubmit() && true!==$form->fails()  ){
+
             try {
                 $credentials = array(
                                 'email'    => \Input::get('email'),
                                 'password' => \Input::get('pass')
                 );
-                \Log::info($credentials);
-
                 $user = \Sentry::authenticate($credentials, false);
                 \Event::fire('user.login', $user);
                 return \Redirect::route('ap.main');

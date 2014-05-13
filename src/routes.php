@@ -13,6 +13,12 @@ Route::group(array('before' => 'ap.auth'), function()
     Route::get('/admin/{module}', ['uses'=>'\Nifus\AdminPanel\Main@Listing','as'=>'ap.listing'])->where('module','[A-Za-z\/_0-9]+');
 });
 
+View::composer('admin-panel::views.layout.Index', function($view)
+{
+    $par = \Route::getCurrentRoute()->getParameter('module');
+    $structure = \Nifus\AdminPanel\Helper::loadConfig('structure');
+    $view->with('builder', $structure);
+});
 
 /**
  *  left menu
@@ -46,7 +52,5 @@ View::composer('admin-panel::views.layout.Index', function($view)
     foreach( $files as $file ){
         $html.=\HTML::script($file);
     }
-
     $view->with('js', $html);
-
 });

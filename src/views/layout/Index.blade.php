@@ -43,7 +43,7 @@
 
             <div class="col-md-3">
                 <div class="logo">
-                    <h1><a href="{{route('ap.main')}}">GTS <span class="bold">back office</span></a></h1>
+                    <h1><a href="{{route('ap.main')}}">{{$builder->config('name')}}</a></h1>
                 </div>
             </div>
             {{$menu_left}}
