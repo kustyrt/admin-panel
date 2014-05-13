@@ -76,7 +76,6 @@ var Ap={
                 }
                 $('#edit_form').html(answer.content).show();
                 $("body").trigger("load_edit_page", [ "id" ]);
-                alert(1)
             }
         });
 

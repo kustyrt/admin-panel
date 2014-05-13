@@ -45,7 +45,7 @@ class Builder
 
     public function getJsonUrl(){
 
-        return route('ap.json',['model'=>$this->config['config_file'],'action'=>$this->config['action']]);
+        return route('ap.json',['module'=>$this->config['config_file'],'action'=>$this->config['action']]);
     }
 
     protected function setConfig($key,$value){
