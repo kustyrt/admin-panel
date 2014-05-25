@@ -11,7 +11,7 @@
   <meta name="author" content="">
 
   <!-- Stylesheets -->
-  <link href="{{asset('packages/nifus/admin-panel/style/bootstrap.css')}}" rel="stylesheet">
+  <link href="{{asset('packages/nifus/admin-panel/style/bootstrap.min.css')}}" rel="stylesheet">
   <link rel="stylesheet" href="{{asset('packages/nifus/admin-panel/style/font-awesome.css')}}">
   <link href="{{asset('packages/nifus/admin-panel/style/style.css')}}" rel="stylesheet">
   <link href="{{asset('packages/nifus/admin-panel/style/bootstrap-responsive.css')}}" rel="stylesheet">

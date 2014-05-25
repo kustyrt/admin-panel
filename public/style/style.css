@@ -1747,3 +1747,16 @@ footer .copy{
 		display: none;
 	}
 }
+
+/** фиксы админки **/
+div.modal{
+    top:50px;
+    z-index:1051;
+
+}
+div.modal-backdrop{
+   
+}
+
+
+
