@@ -11,11 +11,10 @@
   <meta name="author" content="">
 
   <!-- Stylesheets -->
-  <link href="{{asset('packages/nifus/admin-panel/style/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{asset('packages/nifus/admin-panel/style/bootstrap.css')}}" rel="stylesheet">
   <link rel="stylesheet" href="{{asset('packages/nifus/admin-panel/style/font-awesome.css')}}">
   <link href="{{asset('packages/nifus/admin-panel/style/style.css')}}" rel="stylesheet">
-  <link href="{{asset('packages/nifus/admin-panel/style/bootstrap-responsive.css')}}" rel="stylesheet">
-  
+
   <!-- HTML5 Support for IE -->
   <!--[if lt IE 9]>
   <script src="{{asset('packages/nifus/admin-panel/js/html5shim.js')}}"></script>
@@ -23,6 +22,10 @@
 
   <!-- Favicon -->
   <link rel="shortcut icon" href="{{asset('packages/nifus/admin-panel/img/favicon/favicon.png')}}">
+
+    <script src="{{asset('packages/nifus/admin-panel/js/jquery.js')}}"></script>
+    <script src="{{asset('packages/nifus/admin-panel/js/bootstrap.js')}}"></script>
+
 </head>
 
 <body>
@@ -76,22 +79,20 @@
 						</div>
                     <br />
                   </form>
-				  
+
 				</div>
                 </div>
-              
 
-            </div>  
+
+            </div>
       </div>
     </div>
-  </div> 
+  </div>
 </div>
 
 
 {{$form->css()}}
 
-<!-- JS -->
-<script src="{{asset('packages/nifus/admin-panel/js/jquery.js')}}"></script>
 {{$form->js()}}
 
 </body>
