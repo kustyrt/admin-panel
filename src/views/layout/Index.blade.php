@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <link href="{{asset('packages/nifus/admin-panel/style/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('packages/nifus/admin-panel/style/bootstrap.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('packages/nifus/admin-panel/style/font-awesome.css')}}">
     <link href="{{asset('packages/nifus/admin-panel/style/style.css')}}" rel="stylesheet">
 

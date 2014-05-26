@@ -1755,8 +1755,14 @@ div.modal{
 
 }
 div.modal-backdrop{
-   
+    display:none;
 }
 
+.validetta-error{
+    z-index:1000;
+}
 
-
+div.matter div.container{
+    padding-right:60px;
+    padding-left:60px;
+}
