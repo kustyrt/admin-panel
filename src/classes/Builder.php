@@ -63,5 +63,13 @@ class Builder
         return $this->config('config_file');
     }
 
+    public function getFilter(){
+        return '12';
+    }
+
+    public function hasFilter(){
+        return true;
+    }
+
 
 }

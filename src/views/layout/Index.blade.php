@@ -45,6 +45,7 @@
 
     <!-- Main bar -->
     <div class="mainbar">
+
         {{$content}}
     </div>
 

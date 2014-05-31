@@ -3,11 +3,8 @@
 
     <div class="bread-crumb pull-right">
         {{ Breadcrumbs::render('ap.item.listing',$builder) }}
-
     </div>
-
     <div class="clearfix"></div>
-
 </div>
 
 
@@ -20,10 +17,19 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <button type="button" class="btn btn-default" id="listing_add_button">Добавить</button>
+                    @if ( $builder->hasFilter() )
+                    <button type="button" class="btn btn-default" id="filter_button" >Фильтровать</button>
+                    @endif
+                </div>
+            </div>
+            <div class="panel panel-default hide" id="filter_table">
+                <div class="panel-body">
+                    <h3>Фильтры</h3>
+                    {{$builder->getFilter()}}
                 </div>
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-12" >
                 <table id="table"></table>
                 <div id="pgwidth"></div>
             </div>

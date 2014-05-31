@@ -4,6 +4,23 @@ var Ap={
     editForm:false,
     init : function(){
         this.initEditButtons();
+        this.initFilter();
+    },
+
+    initFilter:function(){
+        $('body').on('click','#filter_button',function(){
+            var status = $(this).attr('data-status');
+            console.log(status)
+
+            if ( status!='on' ){
+                $('#filter_table').removeClass('hide');
+                $(this).attr('data-status','on');
+            }else{
+                $('#filter_table').addClass('hide');
+                $(this).attr('data-status','off');
+            }
+        });
+
     },
 
     initEditForm : function( config ){

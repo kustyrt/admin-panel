@@ -107,7 +107,6 @@ class AdminPanel
             $model = $closure($model);
         }
         $this->setConfig('model', ['name' => $class_name,'model'=>$model,'key'=>$key]);
-
         return $this;
     }
 
@@ -149,6 +148,12 @@ class AdminPanel
             $configs[] = $field->getConfig();
         }
         $this->setConfig('fields', $configs);
+        return $this;
+    }
+
+    public function filtersForm( $closure )
+    {
+        $filter_form  = $closure();
 
         return $this;
     }
@@ -195,7 +200,6 @@ class AdminPanel
         }
         if (!isset($this->config[$key])) {
             return null;
-            //throw new ConfigException('Нет ключа ' . $key);
         }
         return $this->config[$key];
     }
