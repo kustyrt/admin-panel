@@ -10,8 +10,6 @@ var Ap={
     initFilter:function(){
         $('body').on('click','#filter_button',function(){
             var status = $(this).attr('data-status');
-            console.log(status)
-
             if ( status!='on' ){
                 $('#filter_table').removeClass('hide');
                 $(this).attr('data-status','on');

@@ -153,8 +153,7 @@ class AdminPanel
 
     public function filtersForm( $closure )
     {
-        $filter_form  = $closure();
-
+        $this->setConfig('filter_form', $closure());
         return $this;
     }
 

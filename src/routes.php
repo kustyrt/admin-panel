@@ -48,8 +48,10 @@ View::composer('admin-panel::views.layout.Index', function($view)
     $structure = \Nifus\AdminPanel\Helper::loadConfig('structure');
     $files = $structure->config('js');
     $html = '';
-    foreach( $files as $file ){
-        $html.=\HTML::script($file);
+    if ( is_array($files) ){
+        foreach( $files as $file ){
+            $html.=\HTML::script($file);
+        }
     }
     $view->with('js', $html);
 });

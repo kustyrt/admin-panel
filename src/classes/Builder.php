@@ -64,11 +64,18 @@ class Builder
     }
 
     public function getFilter(){
-        return '12';
+        $filter_form = $this->config('filter_form');
+        //$filter_form->setExtensions(['AdminFilter']);
+        //return $filter_form->render();
+        return '';
     }
 
     public function hasFilter(){
-        return true;
+        $filter_form = $this->config('filter_form');
+        if ( isset($filter_form) ){
+            return true;
+        }
+        return false;
     }
 
 
