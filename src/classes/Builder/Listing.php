@@ -11,8 +11,6 @@ class Listing extends Builder
 
     static function create($config){
         $result = \Nifus\AdminPanel\Helper::loadConfig('classes/'.$config);
-
-
         if ( !$result instanceof \Nifus\AdminPanel\AdminPanel ){
             return false;
         }
@@ -38,7 +36,6 @@ class Listing extends Builder
         $model = $this->panel->config('model');
         foreach( $fields as $field ){
             $size=sizeof($result);
-
             $result[$size]['editable']=true;
             $result[$size]['name']=$field['name'];
             $result[$size]['index']=$field['name'];
@@ -48,23 +45,18 @@ class Listing extends Builder
             if  (isset($model['key']) && $model['key']==$field['name'] ){
                 $result[$size]['key']= true;
             }
-
-            //key
         }
         return json_encode($result,JSON_UNESCAPED_UNICODE);
     }
 
     public function getData(){
         $model_config = $this->panel->config('model');
-        $model = $model_config['model'];
+        $model = $this->panel->model;
+        //$model_config['model'];
         $this->total = $model->count();
+        \Log::info($model->getQuery()->toSql());
         $rows = $model->take($this->getRowNum())->skip(($this->page-1)*$this->getRowNum());
-
-        //\Log::info($this->page);
-        //\Log::info($rows->getQuery()->toSql());
-
-        $rows = $rows
-            ->get();
+        $rows = $rows->get();
         $fields = $this->panel->config('fields');
         $data = [];
         foreach( $rows as $row ){
@@ -74,7 +66,6 @@ class Listing extends Builder
                 $data[$link][$field_name] = $row->$field_name;
             }
         }
-
         return $data;
     }
 
@@ -94,6 +85,25 @@ class Listing extends Builder
     }
     public function setOnPage($count){
         return $this->on_page=$count;
+    }
+    public function setFilter($filter){
+        if ( !is_array($filter) || sizeof($filter)==0 ){
+            return false;
+        }
+        foreach( $filter as $key=>$value ){
+            if ( empty($value) ){
+                continue;
+            }
+            if ( isset($_GET['operation'][$key]) ){
+                switch($_GET['operation'][$key]){
+                    case('like'):
+                        $this->panel->model->where($key,'like',$value.'%');
+                        break;
+                }
+            }else{
+                $this->panel->model->where($key,$value);
+            }
+        }
     }
 
 

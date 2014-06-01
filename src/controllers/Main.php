@@ -16,15 +16,22 @@ Class Main extends \BaseController
         $builder->setPage( \Input::get('page') );
         $builder->setOnPage( \Input::get('rows') );
 
+        if ( \Input::has('filter') ){
+            $builder->setFilter( \Input::get('filter') );
+        }
+
+
         if ( false===$builder ){
             \App::abort(404);
         }
+
         $response = [
             'page'=> (\Input::has('page') ? \Input::get('page') : 1),
             'rows'=> $builder->getData($action),
-            'total'=> $builder->getTotal(),
-            'records'=> $builder->getRowNum()
+            'records'=> $builder->getRowNum(),
+            'total'=> ceil($builder->getTotal()/$builder->getRowNum() )
         ];
+
         return \Response::json($response);
     }
 

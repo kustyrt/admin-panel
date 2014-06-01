@@ -8,6 +8,9 @@ class AdminPanel
         //$formbuilder,
         $menu = [];
 
+    public
+        $model;
+
     function __construct($prefix = '')
     {
         if (!empty($prefix) && true === Helper::CheckPrefix($prefix)) {
@@ -17,7 +20,7 @@ class AdminPanel
         $this->registerBreadcrumbs();
     }
 
-    protected function setConfig($key, $value)
+    public function setConfig($key, $value)
     {
         if (empty($key)) {
             throw new ConfigException('Пустой ключ');
@@ -107,6 +110,7 @@ class AdminPanel
             $model = $closure($model);
         }
         $this->setConfig('model', ['name' => $class_name,'model'=>$model,'key'=>$key]);
+        $this->model = $model;
         return $this;
     }
 

@@ -1,5 +1,9 @@
 var Ap={
+    filter : Array(),
+    operation : Array(),
+
     editUrl:false,
+    listingUrl:false,
     editRowid: 0,
     editForm:false,
     init : function(){
@@ -8,7 +12,7 @@ var Ap={
     },
 
     initFilter:function(){
-        $('body').on('click','#filter_button',function(){
+        $('body').on('click','#filter_show_button',function(){
             var status = $(this).attr('data-status');
             if ( status!='on' ){
                 $('#filter_table').removeClass('hide');
@@ -17,6 +21,9 @@ var Ap={
                 $('#filter_table').addClass('hide');
                 $(this).attr('data-status','off');
             }
+        });
+        $('body').on('click','#filter_button',function(){
+            Ap.filterTable();
         });
 
     },
@@ -80,7 +87,6 @@ var Ap={
         this.editRowid = id;
         $('#listing').hide();
         $('#edit_form').hide();
-        Ap.showPleaseWait();
         $.ajax({
             type: "POST",
             url: this.editUrl,
@@ -96,15 +102,101 @@ var Ap={
         });
     },
 
-
-        showPleaseWait: function() {
-            var pleaseWaitDiv = $('<div class="modal hide" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false"><div class="modal-header"><h1>Processing...</h1></div><div class="modal-body"><div class="progress progress-striped active"><div class="bar" style="width: 100%;"></div></div></div></div>')
-            pleaseWaitDiv.modal();
-        },
-        hidePleaseWait: function () {
-
-            pleaseWaitDiv.modal('hide');
+    initFilterForm:function(id_form){
+        var form = $('#'+id_form);
+        if (form.length==0 ){
+            return false;
         }
+
+        form.on('change','select',function(){
+            var name = $(this).attr('data-filter-name');
+            if ( name == undefined ){
+                name = $(this).attr('name');
+            }
+            Ap.filter[name] = $(this).val();
+        })
+        form.on('keyup','input[type=text]',function(){
+            var name = $(this).attr('data-filter-name');
+            var operation = $(this).attr('data-operation');
+            if ( name == undefined ){
+                name = $(this).attr('name');
+            }
+            Ap.filter[name] = $(this).val();
+
+            if ( operation != undefined ){
+                Ap.operation[name] = operation;
+            }
+        })
+
+        $('#filter_reset_button').on('click',function(){
+            Ap.filter = new Array();
+            document.getElementById(form.attr('id')).reset();
+            Ap.filterTable();
+        })
+    },
+
+    filterTable:function(){
+        var base_url = Ap.listingUrl;
+            //  filter
+        var url = [];
+        for(i in Ap.filter ){
+            url[url.length]='filter['+i+']' +'='+Ap.filter[i];
+        }
+        base_url  = base_url  + '?' + url.join('&');
+            // operation
+        var operation=[];
+        for(i in Ap.operation ){
+            operation[operation.length]='operation['+i+']' +'='+Ap.operation[i];
+        }
+        base_url  = base_url  + '&' + operation.join('&');
+
+
+        $("#table").jqGrid('setGridParam',{url:base_url ,page:1}).trigger("reloadGrid");
+    },
+
+
+
+
+
+    initDataTable:function(config){
+        Ap.listingUrl = config.url;
+
+       // console.log(config.url);
+        var options={
+            url     : config.url,
+            datatype: "json",
+            jsonReader: {
+                repeatitems : false,
+                id: "0"
+            },
+            height:410,
+            //width:1050,
+            autowidth: true,
+            rowList: [10,20,30],
+            pager: '#pgwidth',
+            colNames:config.colNames,
+            colModel:config.colModel
+        }
+
+        if ( config.custom_edit ){
+            options.onSelectRow = function(id){
+                Ap.editRow(id);
+            };
+        $("#table").jqGrid(options);
+        }else{
+            if ( config.fast_edit ){
+                options.editurl = "server.php";
+                options.viewrecords = true;
+                $("#table").jqGrid(options);
+                $("#table").jqGrid('navGrid',"#pgwidth",{edit:true,add:false,del:false});
+                $("#table").jqGrid('inlineNav',"#pgwidth");
+            }
+        }
+    }
+
+
+
+
 
 
 };

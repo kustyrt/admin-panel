@@ -18,7 +18,7 @@
                 <div class="panel-body">
                     <button type="button" class="btn btn-default" id="listing_add_button">Добавить</button>
                     @if ( $builder->hasFilter() )
-                    <button type="button" class="btn btn-default" id="filter_button" >Фильтровать</button>
+                    <button type="button" class="btn btn-default" id="filter_show_button" >Фильтровать</button>
                     @endif
                 </div>
             </div>
@@ -30,8 +30,8 @@
                     <div class="rest-m"></div>
 
                     <hr/>
-                    <button type="button" class="btn btn-default" >Фильтровать</button>
-                    <button type="button" class="btn btn-reset" >Очистить</button>
+                    <button type="button" class="btn btn-default" id="filter_button" >Фильтровать</button>
+                    <button type="button" class="btn btn-reset"  id="filter_reset_button">Очистить</button>
                 </div>
             </div>
 
