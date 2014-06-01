@@ -5,9 +5,6 @@ class Builder
 {
     protected $panel,$config;
 
-
-
-
     function __construct( \Nifus\AdminPanel\AdminPanel $panel ){
         $this->panel = $panel;
         $this->config = $this->panel->config();
@@ -25,22 +22,6 @@ class Builder
         return $this->config[$key];
     }
 
-    /*
-    public function execute(){
-
-        switch($this->config['action']){
-            case('listing'):
-                return Builder\Listing::create($this)->execute();
-                break;
-            case('listingJson'):
-                return Builder\Listing::create($this)->execute();
-                break;
-            case('Edit'):
-                return Builder\Listoing::create($this)->execute();
-                break;
-        }
-        //return $this;
-    }*/
 
 
     public function getJsonUrl(){
@@ -63,19 +44,38 @@ class Builder
         return $this->config('config_file');
     }
 
-    public function getFilter(){
+    protected function getFilter(){
         $filter_form = $this->config('filter_form');
         //$filter_form->setExtensions(['AdminFilter']);
-        //return $filter_form->render();
-        return '';
+        if ( $filter_form instanceof \Nifus\FormBuilder\FormBuilder ){
+            return $filter_form;
+        }
+        return null;
+    }
+
+    public function renderFilterForm(){
+        $filter_form = $this->getFilter();
+        if ( !is_null($filter_form) ){
+            return $filter_form->render();
+        }
+        return null;
     }
 
     public function hasFilter(){
-        $filter_form = $this->config('filter_form');
-        if ( isset($filter_form) ){
+        $filter_form = $this->getFilter();
+        if ( !is_null($filter_form) ){
             return true;
         }
         return false;
+    }
+
+    public function getFilterFormId(){
+        $filter_form = $this->getFilter();
+        if ( is_null($filter_form) ){
+            return null;
+        }
+        return $filter_form->form_name;
+
     }
 
 

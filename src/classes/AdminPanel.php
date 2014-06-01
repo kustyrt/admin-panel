@@ -151,9 +151,15 @@ class AdminPanel
         return $this;
     }
 
+    /**
+     * Передаём formbuilder для вывода формы
+     * @param $closure
+     * @return $this
+     */
     public function filtersForm( $closure )
     {
         $this->setConfig('filter_form', $closure());
+
         return $this;
     }
 
@@ -180,15 +186,8 @@ class AdminPanel
     public function editFields($closure)
     {
         $this->setConfig('custom_edit', true);
-
-        //$formBuilder = $closure();
-        /*dd( var_dump($formBuilder) );
-        if (!$formBuilder instanceof  \Nifus\FormBuilder\FormBuilder) {
-            throw new ConfigException('\Nifus\FormBuilder\FormBuilder ');
-        }*/
         $this->formbuilder = $closure;
         $this->setConfig('formbuilder', $closure);
-
         return $this;
     }
 
@@ -212,22 +211,6 @@ class AdminPanel
         $this->setConfig('js', $files);
         return $this;
     }
-    /*
-    public function order($key,$value){
-        if ( !isset($this->config['order']) ){
-            $this->config['order']=[];
-        }
-        if ( empty($key) ){
-            throw new ConfigException('Нет ключа ' . $key);
-        }
-        $this->config['order'][$key]=$value;
-    }
-
-    public function orders($orders){
-        foreach($orders as $key=>$value ){
-            $this->order($key,$value);
-        }
-    }*/
 
     private function registerBreadcrumbs()
     {

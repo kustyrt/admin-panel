@@ -54,7 +54,6 @@
 </div>
 
 
-<span class="totop"><a href="#"><i class="icon-chevron-up"></i></a></span>
 
 
 {{$js}}
