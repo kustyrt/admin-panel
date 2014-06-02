@@ -75,7 +75,8 @@
                 'colModel' :{{$builder->getJsonColModel()}},
                 'rowNum' :{{$builder->getRowNum()}},
                 'custom_edit' : 1,
-                'fast_edit' : 0
+                'fast_edit' : 0,
+                'filter_url' :'{{$builder->filterFieldUrl()}}'
             }
         );
     })

@@ -19,6 +19,12 @@ class Field
         return $this;
     }
 
+    public function filter($url){
+        $this->setConfig('filter',route('ap.listing',['module'=>$url]));
+        $this->setConfig('name','filter');
+        return $this;
+    }
+
     public function sort($key,$order){
         $this->setConfig('sort',['key'=>$key,'order'=>$order]);
         return $this;

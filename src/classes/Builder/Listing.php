@@ -45,6 +45,7 @@ class Listing extends Builder
             if  (isset($model['key']) && $model['key']==$field['name'] ){
                 $result[$size]['key']= true;
             }
+
         }
         return json_encode($result,JSON_UNESCAPED_UNICODE);
     }
@@ -63,7 +64,11 @@ class Listing extends Builder
             $link = sizeof($data);
             foreach( $fields as $field ){
                 $field_name = $field['name'];
-                $data[$link][$field_name] = $row->$field_name;
+                if  (isset($field['filter']) ){
+                    $data[$link][$field_name] = route('ap.listing',['module'=>$field['filter'],'filter'=>$row->$field_name]);
+                }else{
+                    $data[$link][$field_name] = $row->$field_name;
+                }
             }
         }
         return $data;

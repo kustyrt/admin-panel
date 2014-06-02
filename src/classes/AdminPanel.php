@@ -149,7 +149,11 @@ class AdminPanel
             if (!$field instanceof  \Nifus\AdminPanel\Field) {
                 throw new ConfigException('\Nifus\AdminPanel\Field');
             }
-            $configs[] = $field->getConfig();
+            $config = $field->getConfig();
+            $configs[] = $config;
+            if ( isset($config['filter']) ){
+                $this->setConfig('filter',$config['filter']);
+            }
         }
         $this->setConfig('fields', $configs);
         return $this;

@@ -69,6 +69,14 @@ class Builder
         return false;
     }
 
+    public function filterFieldUrl(){
+        $filter = $this->config('filter');
+        if ( !is_null($filter) ){
+            return $filter;
+        }
+        return null;
+    }
+
     public function getFilterFormId(){
         $filter_form = $this->getFilter();
         if ( is_null($filter_form) ){
