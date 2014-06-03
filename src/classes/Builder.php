@@ -72,7 +72,15 @@ class Builder
     public function filterFieldUrl(){
         $filter = $this->config('filter');
         if ( !is_null($filter) ){
-            return $filter;
+            return $filter['listing_url'];
+        }
+        return null;
+    }
+
+    public function filterFieldKey(){
+        $filter = $this->config('filter');
+        if ( !is_null($filter) ){
+            return $filter['key'];
         }
         return null;
     }

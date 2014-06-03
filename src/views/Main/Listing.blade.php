@@ -59,9 +59,7 @@
 <script type="text/javascript">
     $(function(){
         Ap.init();
-        @if( $builder->hasFilter() )
-            Ap.initFilterForm('{{$builder->getFilterFormId()}}');
-        @endif
+
         Ap.initEditForm(
             {
                 'url': '{{route('ap.json.edit_url',['module'=>$builder->config('config_file')])}}',
@@ -75,9 +73,12 @@
                 'colModel' :{{$builder->getJsonColModel()}},
                 'rowNum' :{{$builder->getRowNum()}},
                 'custom_edit' : 1,
-                'fast_edit' : 0,
-                'filter_url' :'{{$builder->filterFieldUrl()}}'
+                'fast_edit' : 0
             }
         );
+        Ap.initFilterListing('{{$builder->filterFieldUrl()}}','{{$builder->filterFieldKey()}}');
+        @if( $builder->hasFilter() )
+            Ap.initFilterForm('{{$builder->getFilterFormId()}}',{'partner_id':1});
+        @endif
     })
 </script>

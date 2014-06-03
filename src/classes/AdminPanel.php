@@ -151,8 +151,8 @@ class AdminPanel
             }
             $config = $field->getConfig();
             $configs[] = $config;
-            if ( isset($config['filter']) ){
-                $this->setConfig('filter',$config['filter']);
+            if ( isset($config['filter_key']) ){
+                $this->setConfig('filter',['listing_url'=>$config['listing_url'],'key'=>$config['filter_key'] ]);
             }
         }
         $this->setConfig('fields', $configs);

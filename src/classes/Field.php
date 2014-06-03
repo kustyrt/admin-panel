@@ -19,8 +19,9 @@ class Field
         return $this;
     }
 
-    public function filter($url){
-        $this->setConfig('filter',route('ap.listing',['module'=>$url]));
+    public function filter($url,$filter_key){
+        $this->setConfig('listing_url',route('ap.listing',['module'=>$url]));
+        $this->setConfig('filter_key',$filter_key);
         $this->setConfig('name','filter');
         return $this;
     }
