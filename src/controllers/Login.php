@@ -13,14 +13,24 @@ Class User extends \BaseController
      * @return mixed
      */
     function Login(){
+
+        if ( \Config::get('admin-panel::config.auth')=='username' ){
+            $field = \Nifus\FormBuilder\FormBuilder::createField('text')
+                ->setName('username')->setLabel( trans('admin-panel::admin.username') )
+                ->setClass('form-control')->setValid(['required'],trans('admin-panel::admin.username_error'));
+        }else{
+            $field = \Nifus\FormBuilder\FormBuilder::createField('text')
+                ->setName('email')->setLabel( trans('admin-panel::admin.email') )
+                ->setClass('form-control')->setValid(['email'],trans('admin-panel::admin.email_error'));
+        }
+
         $form = \Nifus\FormBuilder\FormBuilder::create('auth_form')
             ->setRender('array')->setExtensions(['Placeholder','Validetta'])
             ->setFields([
-                \Nifus\FormBuilder\FormBuilder::createField('text')
-                    ->setName('email')->setLabel( trans('admin-panel::admin.email') )
-                    ->setClass('form-control')->setValid(['email'],trans('admin-panel::admin.email_error')),
 
-                \Nifus\FormBuilder\FormBuilder::createField('password')
+                $field,
+
+                    \Nifus\FormBuilder\FormBuilder::createField('password')
                     ->setName('pass')->setLabel( trans('admin-panel::admin.pass') )
                     ->setClass('form-control')->setValid(['min:4'],trans('admin-panel::admin.pass_error') ),
 
@@ -32,8 +42,9 @@ Class User extends \BaseController
         if ( $form->isSubmit() && true!==$form->fails()  ){
 
             try {
+                $key = \Config::get('admin-panel::config.auth');
                 $credentials = array(
-                                'email'    => \Input::get('email'),
+                                $key    => \Input::get($key),
                                 'password' => \Input::get('pass')
                 );
                 $user = \Sentry::authenticate($credentials, false);
@@ -44,6 +55,7 @@ Class User extends \BaseController
             }
         }
         $this->layout->form=$form->render();
+        $this->layout->is_email= \Config::get('admin-panel::config.auth')=='email' ? 1 : 0;
     }
 
 

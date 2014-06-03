@@ -2,7 +2,9 @@
 return [
         //  login.php
     'email' => 'Email',
+    'username' => 'Логин',
     'email_error' => 'Нужно правильно заполнить поле Email',
+    'username_error' => 'Нужно правильно заполнить поле Логин',
     'pass' => 'Пароль',
     'pass_error' => 'Нужно правильно заполнить поле Пароль',
     'remember_me' => 'Запомнить меня',

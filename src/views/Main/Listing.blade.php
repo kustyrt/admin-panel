@@ -28,7 +28,6 @@
                     {{$builder->renderFilterForm()}}
                     <br style="clear:both"/>
                     <div class="rest-m"></div>
-
                     <hr/>
                     <button type="button" class="btn btn-default" id="filter_button" >Фильтровать</button>
                     <button type="button" class="btn btn-reset"  id="filter_reset_button">Очистить</button>
@@ -66,6 +65,10 @@
                 'delete_url' :'{{route('ap.json.delete_url',['module'=>$builder->config('config_file')])}}'
             }
         );
+    Ap.initFilterListing('{{$builder->filterFieldUrl()}}','{{$builder->filterFieldKey()}}');
+    @if( $builder->hasFilter() )
+        Ap.initFilterForm('{{$builder->getFilterFormId()}}',{{ json_encode($_GET['filter'])}});
+    @endif
         Ap.initDataTable(
             {
                 'url': '{{$builder->getJsonUrl()}}',
@@ -76,9 +79,6 @@
                 'fast_edit' : 0
             }
         );
-        Ap.initFilterListing('{{$builder->filterFieldUrl()}}','{{$builder->filterFieldKey()}}');
-        @if( $builder->hasFilter() )
-            Ap.initFilterForm('{{$builder->getFilterFormId()}}',{'partner_id':1});
-        @endif
+
     })
 </script>

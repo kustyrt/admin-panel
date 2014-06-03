@@ -52,10 +52,17 @@
                   <form class="form-horizontal" method="post" id="auth_form">
                     <!-- Email -->
                     <div class="form-group">
-                      <label class="control-label col-lg-3" for="inputEmail">{{ trans('admin-panel::admin.email') }}</label>
-                      <div class="col-lg-9">
-                          {{$form->field('email')}}
-                      </div>
+                        @if( $is_email )
+                          <label class="control-label col-lg-3" for="inputEmail">{{ trans('admin-panel::admin.email') }}</label>
+                          <div class="col-lg-9">
+                              {{$form->field('email')}}
+                          </div>
+                        @else
+                        <label class="control-label col-lg-3" for="inputEmail">{{ trans('admin-panel::admin.username') }}</label>
+                        <div class="col-lg-9">
+                            {{$form->field('username')}}
+                        </div>
+                        @endif
                     </div>
                     <!-- Password -->
                     <div class="form-group">

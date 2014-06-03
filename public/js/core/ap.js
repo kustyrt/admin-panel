@@ -152,10 +152,12 @@ var Ap={
                 }
             }
             $('#filter_button').click();
+
         }
     },
 
     filterTable:function(){
+
         var base_url = Ap.listingUrl;
             //  filter
         var url = [];
@@ -163,6 +165,7 @@ var Ap={
             url[url.length]='filter['+i+']' +'='+Ap.filter[i];
         }
         base_url  = base_url  + '?' + url.join('&');
+
             // operation
         var operation=[];
         for(i in Ap.operation ){
@@ -183,10 +186,24 @@ var Ap={
 
     initDataTable:function(config){
         Ap.listingUrl = config.url;
+        var base_url = Ap.listingUrl;
+            //  filter
+        var url = [];
+        for(i in Ap.filter ){
+            url[url.length]='filter['+i+']' +'='+Ap.filter[i];
+        }
+        base_url  = base_url  + '?' + url.join('&');
+
+            // operation
+        var operation=[];
+        for(i in Ap.operation ){
+            operation[operation.length]='operation['+i+']' +'='+Ap.operation[i];
+        }
+        base_url  = base_url  + '&' + operation.join('&');
 
        // console.log(config.url);
         var options={
-            url     : config.url,
+            url     : base_url,
             datatype: "json",
             jsonReader: {
                 repeatitems : false,
@@ -229,6 +246,7 @@ var Ap={
                 $("#table").jqGrid('inlineNav',"#pgwidth");
             }
         }
+
     }
 
 
