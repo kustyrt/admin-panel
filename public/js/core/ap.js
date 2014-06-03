@@ -125,7 +125,7 @@ var Ap={
         form.on('keyup','input[type=text]',function(){
             var name = $(this).attr('data-filter-name');
             var operation = $(this).attr('data-operation');
-            if ( name = undefined ){
+            if ( name == undefined ){
                 name = $(this).attr('name');
             }
             Ap.filter[name] = $(this).val();
@@ -188,8 +188,10 @@ var Ap={
         Ap.listingUrl = config.url;
         var base_url = Ap.listingUrl;
             //  filter
+
         var url = [];
         for(i in Ap.filter ){
+
             url[url.length]='filter['+i+']' +'='+Ap.filter[i];
         }
         base_url  = base_url  + '?' + url.join('&');

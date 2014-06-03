@@ -67,7 +67,11 @@
         );
     Ap.initFilterListing('{{$builder->filterFieldUrl()}}','{{$builder->filterFieldKey()}}');
     @if( $builder->hasFilter() )
-        Ap.initFilterForm('{{$builder->getFilterFormId()}}',{{ json_encode($_GET['filter'])}});
+        @if( \Input::has('filter') )
+            Ap.initFilterForm('{{$builder->getFilterFormId()}}',{{ json_encode($_GET['filter'])}});
+        @else
+            Ap.initFilterForm('{{$builder->getFilterFormId()}}',null);
+        @endif
     @endif
         Ap.initDataTable(
             {
