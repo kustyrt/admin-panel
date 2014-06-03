@@ -4,6 +4,8 @@ var Ap={
 
     editUrl:false,
     listingUrl:false,
+    filterUrl:false,
+    filterKey:false,
     editRowid: 0,
     editForm:false,
     init : function(){
@@ -11,7 +13,13 @@ var Ap={
         this.initFilter();
     },
 
+    initFilterListing:function(url,key){
+        Ap.filterUrl = url;
+        Ap.filterKey = key;
+    },
+
     initFilter:function(){
+
         $('body').on('click','#filter_show_button',function(){
             var status = $(this).attr('data-status');
             if ( status!='on' ){
@@ -25,7 +33,6 @@ var Ap={
         $('body').on('click','#filter_button',function(){
             Ap.filterTable();
         });
-
     },
 
     initEditForm : function( config ){
@@ -102,7 +109,7 @@ var Ap={
         });
     },
 
-    initFilterForm:function(id_form){
+    initFilterForm:function(id_form,data ){
         var form = $('#'+id_form);
         if (form.length==0 ){
             return false;
@@ -114,11 +121,11 @@ var Ap={
                 name = $(this).attr('name');
             }
             Ap.filter[name] = $(this).val();
-        })
+        });
         form.on('keyup','input[type=text]',function(){
             var name = $(this).attr('data-filter-name');
             var operation = $(this).attr('data-operation');
-            if ( name == undefined ){
+            if ( name = undefined ){
                 name = $(this).attr('name');
             }
             Ap.filter[name] = $(this).val();
@@ -126,13 +133,26 @@ var Ap={
             if ( operation != undefined ){
                 Ap.operation[name] = operation;
             }
-        })
+        });
 
         $('#filter_reset_button').on('click',function(){
             Ap.filter = new Array();
             document.getElementById(form.attr('id')).reset();
             Ap.filterTable();
-        })
+        });
+
+        if ( data!=null ){
+            for( i in  data ){
+                var el = form.find('*[name="'+i+'"]');
+                if ( el.length>0 ){
+                    el.val(data[i]);
+                    el.change();
+                    $('#filter_table').removeClass('hide');
+                    $('#filter_show_button').attr('data-status','on');
+                }
+            }
+            $('#filter_button').click();
+        }
     },
 
     filterTable:function(){
@@ -149,9 +169,12 @@ var Ap={
             operation[operation.length]='operation['+i+']' +'='+Ap.operation[i];
         }
         base_url  = base_url  + '&' + operation.join('&');
-
-
         $("#table").jqGrid('setGridParam',{url:base_url ,page:1}).trigger("reloadGrid");
+
+    },
+
+    filterLoad:function(id){
+        window.location.href=Ap.filterUrl+'?filter['+Ap.filterKey+']='+id
     },
 
 
@@ -175,14 +198,28 @@ var Ap={
             rowList: [10,20,30],
             pager: '#pgwidth',
             colNames:config.colNames,
-            colModel:config.colModel
+            colModel:config.colModel,
+            gridComplete: function(){
+                if ( Ap.filterUrl ){
+                    var ids = jQuery("#table").getDataIDs();
+                    for(var i=0;i<ids.length;i++){
+                        var cl = ids[i];
+                        be = "<input  type='button' value='Смотреть' onclick=Ap.filterLoad("+cl+"); ></ids>";
+                        jQuery("#table").setRowData(ids[i],{filter:be})
+                    }
+                }
+            }
         }
 
         if ( config.custom_edit ){
-            options.onSelectRow = function(id){
-                Ap.editRow(id);
+            options.onSelectRow = function(id,flag,event){
+                var source = $(event.target);
+                if ( !source.is('button') ){
+                    Ap.editRow(id);
+                }
+
             };
-        $("#table").jqGrid(options);
+            $("#table").jqGrid(options);
         }else{
             if ( config.fast_edit ){
                 options.editurl = "server.php";
