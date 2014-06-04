@@ -19,14 +19,19 @@ Class Edit extends \BaseController
         $form->setId($id);
 
         $form->set('ajax',['url'=>route('ap.json.edit_url',['module'=>$module]) ]);
-        if ( $form->isSubmit() && true!==$form->fails()  ){
 
-            $form->save();
-            return \Response::json(
-                [
-                    'msg'=>'Изменения сохранены'
-                ]
-            );
+
+        //\Log::info($form->fails() );
+
+        if ( $form->isSubmit()  ){
+
+            if ( true===$form->fails() ){
+
+                return \Response::json(['error'=>$form->errors()]);
+            }else{
+                $form->save();
+                return \Response::json(['msg'=>'Изменения сохранены']);
+            }
         }
 
         // \Log::info($form->render());
