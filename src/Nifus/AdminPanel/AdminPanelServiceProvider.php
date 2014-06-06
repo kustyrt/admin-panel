@@ -20,10 +20,10 @@ class AdminPanelServiceProvider extends ServiceProvider {
 	{
         \View::addNamespace('admin-panel', dirname( __FILE__ ) . "/../..");
         \Lang::addNamespace('admin-panel', dirname( __FILE__ ) . "/../../lang");
-        \Config::addNamespace('admin-panel', dirname( __FILE__ ) . "/../../config");
+       // \Config::addNamespace('admin-panel', dirname( __FILE__ ) . "/../../config");
         require __DIR__ . '/../../routes.php';
         require __DIR__ . '/../../filters.php';
-		//$this->package('nifus/admin');
+		$this->package('nifus/admin-panel');
 
     }
 
