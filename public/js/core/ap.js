@@ -1,4 +1,5 @@
 var Ap={
+    actions:Array(),
     filter : Array(),
     operation : Array(),
 
@@ -195,7 +196,6 @@ var Ap={
 
         var url = [];
         for(i in Ap.filter ){
-
             url[url.length]='filter['+i+']' +'='+Ap.filter[i];
         }
         base_url  = base_url  + '?' + url.join('&');
@@ -207,6 +207,7 @@ var Ap={
         }
         base_url  = base_url  + '&' + operation.join('&');
 
+        Ap.actions = config.colActions;
        // console.log(config.url);
         var options={
             url     : base_url,
@@ -223,14 +224,8 @@ var Ap={
             colNames:config.colNames,
             colModel:config.colModel,
             gridComplete: function(){
-                if ( Ap.filterUrl ){
-                    var ids = jQuery("#table").getDataIDs();
-                    for(var i=0;i<ids.length;i++){
-                        var cl = ids[i];
-                        be = "<input  type='button' value='Смотреть' onclick=Ap.filterLoad("+cl+"); ></ids>";
-                        jQuery("#table").setRowData(ids[i],{filter:be})
-                    }
-                }
+                    Ap.makeFilterButtonsInTable();
+                    Ap.makeActionButtonsInTable();
             }
         }
 
@@ -253,10 +248,52 @@ var Ap={
             }
         }
 
+    },
+    makeFilterButtonsInTable:function(){
+        var ids = $("#table").getDataIDs();
+        for(var i=0;i<ids.length;i++){
+            var cl = ids[i];
+            if ( Ap.filterUrl ){
+                var filter = "<input  type='button' value='Смотреть' onclick=Ap.filterLoad("+cl+"); ></ids>";
+            }else{
+                var filter = "";
+            }
+            $("#table").setRowData(ids[i],{filter:filter})
+        }
+    },
+
+
+    makeActionButtonsInTable:function(){
+        var ids = $("#table").getDataIDs();
+        for( var i in Ap.actions ){
+            var act = Ap.actions[i];
+            for(var j in ids ){
+                var action_title = $('#table').getCell(ids[j], act.name);
+                var button = "<input  type='button' value='"+action_title+"' onclick=Ap.actionExecute("+act.url+"); ></ids>";
+                var config = {};
+                config[act.name] = button;
+                $("#table").setRowData(ids[j],config)
+
+            }
+
+        }
+        /*
+        for(var i=0;i<ids.length;i++){
+            var cl = ids[i];
+            if ( Ap.filterUrl ){
+                var filter = "<input  type='button' value='Смотреть' onclick=Ap.filterLoad("+cl+"); ></ids>";
+            }else{
+                var filter = "";
+            }
+            if ( Ap.actionUrl ){
+                var action_title = $('#table').getCell(ids[i], 'StatusStr');
+                var action = "<input  type='button' value='"+action_title+"' onclick=Ap.actionExecute("+cl+"); ></ids>";
+            }else{
+                var action = "";
+            }
+            $("#table").setRowData(ids[i],{filter:filter,'action':action})
+        }*/
     }
-
-
-
 
 
 

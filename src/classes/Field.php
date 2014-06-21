@@ -26,6 +26,11 @@ class Field
         return $this;
     }
 
+    public function action($url){
+        $this->setConfig('action', $url);
+        return $this;
+    }
+
     public function sort($key,$order){
         $this->setConfig('sort',['key'=>$key,'order'=>$order]);
         return $this;

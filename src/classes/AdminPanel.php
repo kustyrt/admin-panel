@@ -4,7 +4,9 @@ namespace Nifus\AdminPanel;
 class AdminPanel
 {
     private
-        $config = [],
+        $config = [
+            'actions'=>[]
+        ],
         //$formbuilder,
         $menu = [];
 
@@ -153,6 +155,12 @@ class AdminPanel
             $configs[] = $config;
             if ( isset($config['filter_key']) ){
                 $this->setConfig('filter',['listing_url'=>$config['listing_url'],'key'=>$config['filter_key'] ]);
+            }
+                //  поля для action
+            if ( isset($config['action']) ){
+                $actions = $this->config['actions'];
+                $actions[]=['url'=>$config['action'],'name'=>$config['name'] ];
+                $this->setConfig('actions',$actions);
             }
         }
         $this->setConfig('fields', $configs);

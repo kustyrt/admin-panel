@@ -17,12 +17,13 @@ class Builder
         }
         if (!isset($this->config[$key])) {
             return null;
-            //throw new ConfigException('Нет ключа ' . $key);
         }
         return $this->config[$key];
     }
 
-
+    public function getJsonColActions(){
+        return json_encode($this->config['actions']);
+    }
 
     public function getJsonUrl(){
 
@@ -46,7 +47,6 @@ class Builder
 
     protected function getFilter(){
         $filter_form = $this->config('filter_form');
-        //$filter_form->setExtensions(['AdminFilter']);
         if ( $filter_form instanceof \Nifus\FormBuilder\FormBuilder ){
             return $filter_form;
         }
@@ -91,7 +91,6 @@ class Builder
             return null;
         }
         return $filter_form->form_name;
-
     }
 
 

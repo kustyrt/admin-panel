@@ -65,14 +65,14 @@
                 'delete_url' :'{{route('ap.json.delete_url',['module'=>$builder->config('config_file')])}}'
             }
         );
-    Ap.initFilterListing('{{$builder->filterFieldUrl()}}','{{$builder->filterFieldKey()}}');
-    @if( $builder->hasFilter() )
-        @if( \Input::has('filter') )
-            Ap.initFilterForm('{{$builder->getFilterFormId()}}',{{ json_encode($_GET['filter'])}});
-        @else
-            Ap.initFilterForm('{{$builder->getFilterFormId()}}',null);
+        Ap.initFilterListing('{{$builder->filterFieldUrl()}}','{{$builder->filterFieldKey()}}');
+        @if( $builder->hasFilter() )
+            @if( \Input::has('filter') )
+                Ap.initFilterForm('{{$builder->getFilterFormId()}}',{{ json_encode($_GET['filter'])}});
+            @else
+                Ap.initFilterForm('{{$builder->getFilterFormId()}}',null);
+            @endif
         @endif
-    @endif
         Ap.initDataTable(
             {
                 'url': '{{$builder->getJsonUrl()}}',
@@ -80,7 +80,8 @@
                 'colModel' :{{$builder->getJsonColModel()}},
                 'rowNum' :{{$builder->getRowNum()}},
                 'custom_edit' : 1,
-                'fast_edit' : 0
+                'fast_edit' : 0,
+                'colActions' : {{$builder->getJsonColActions()}}
             }
         );
 
