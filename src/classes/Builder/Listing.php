@@ -34,20 +34,33 @@ class Listing extends Builder
         $result = [];
         $fields = $this->panel->config('fields');
         $model = $this->panel->config('model');
+        $js_object = '[';
         foreach( $fields as $field ){
+            $js_object.='{editable:true,name:"'.$field['name'].'",index:"'.$field['name'].'"';
             $size=sizeof($result);
+
             $result[$size]['editable']=true;
             $result[$size]['name']=$field['name'];
             $result[$size]['index']=$field['name'];
+            if ( isset($field['formatter']) ){
+                $js_object.=',formatter:'.$field['formatter'];
+
+                $result[$size]['formatter']=$field['formatter'];
+            }
             if ( isset($field['width']) ){
+                $js_object.=',width:'.$field['width'];
+
                 $result[$size]['width']= $field['width'];
             }
             if  (isset($model['key']) && $model['key']==$field['name'] ){
                 $result[$size]['key']= true;
+                $js_object.=',key:true';
             }
-
+            $js_object.='},';
         }
-        return json_encode($result,JSON_UNESCAPED_UNICODE);
+        $js_object.=']';
+
+        return $js_object;
     }
 
     public function getData(){

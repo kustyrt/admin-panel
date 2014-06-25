@@ -22,11 +22,10 @@ class Builder
     }
 
     public function getJsonColActions(){
-        return json_encode($this->config['actions']);
+        return json_encode($this->config['actions'] );
     }
 
     public function getJsonUrl(){
-
         return route('ap.json',['module'=>$this->config['config_file'],'action'=>$this->config['action']]);
     }
 

@@ -26,8 +26,10 @@ class Field
         return $this;
     }
 
-    public function action($url){
-        $this->setConfig('action', $url);
+    public function action($url,$key='id'){
+        $this->setConfig('action', ['url'=>$url,'key'=>$key]);
+        $this->setConfig('formatter', 'Ap.actionButton');
+
         return $this;
     }
 

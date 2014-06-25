@@ -45,7 +45,6 @@
 </div>
 
 
-</div>
 
 
 <link rel="stylesheet" type="text/css" media="screen" href="{{asset('packages/nifus/admin-panel/js/grid/css/ui.css')}}" />
@@ -58,7 +57,6 @@
 <script type="text/javascript">
     $(function(){
         Ap.init();
-
         Ap.initEditForm(
             {
                 'url': '{{route('ap.json.edit_url',['module'=>$builder->config('config_file')])}}',
@@ -80,10 +78,12 @@
                 'colModel' :{{$builder->getJsonColModel()}},
                 'rowNum' :{{$builder->getRowNum()}},
                 'custom_edit' : 1,
-                'fast_edit' : 0,
+                //'fast_edit' : 0,
                 'colActions' : {{$builder->getJsonColActions()}}
             }
         );
+
+
 
     })
 </script>
