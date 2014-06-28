@@ -269,32 +269,29 @@ var Ap={
             var act = Ap.actions[i];
             for(var j in ids ){
                 var action_title = $('#table').getCell(ids[j], act.name);
-                var button = "<input  type='button' value='"+action_title+"' onclick=Ap.actionExecute("+act.url+"); ></ids>";
+                var id = $('#table').getCell(ids[j], act.key);
+                var button = "<input  type='button' value='"+action_title+"' onclick='Ap.actionExecute(\""+act.url+"\","+id+")' ></ids>";
                 var config = {};
                 config[act.name] = button;
                 $("#table").setRowData(ids[j],config)
-
             }
-
         }
-        /*
-        for(var i=0;i<ids.length;i++){
-            var cl = ids[i];
-            if ( Ap.filterUrl ){
-                var filter = "<input  type='button' value='Смотреть' onclick=Ap.filterLoad("+cl+"); ></ids>";
-            }else{
-                var filter = "";
+    },
+
+    actionExecute:function(url,id){
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: "id="+id,
+            dataType: "json",
+            success: function(answer){
+                $("#table").trigger("reloadGrid");
             }
-            if ( Ap.actionUrl ){
-                var action_title = $('#table').getCell(ids[i], 'StatusStr');
-                var action = "<input  type='button' value='"+action_title+"' onclick=Ap.actionExecute("+cl+"); ></ids>";
-            }else{
-                var action = "";
-            }
-            $("#table").setRowData(ids[i],{filter:filter,'action':action})
-        }*/
+        });
     }
 
 
 
+
 };
+
