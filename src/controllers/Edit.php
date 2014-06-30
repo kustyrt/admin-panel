@@ -24,10 +24,13 @@ Class Edit extends \BaseController
             if ( true===$form->fails() ){
                 return \Response::json(['error'=>$form->errors()]);
             }else{
-                if ( false!==$form->save() ){
-                    return \Response::json(['msg'=>'Изменения сохранены']);
+                $res = $form->save();
+
+                if ( false!==$res ){
+                    $id = $res->getKey();
+                    return \Response::json(['msg'=>'Изменения сохранены','id'=>$id]);
                 }else{
-                    return \Response::json(['msg'=>$form->error()]);
+                    return \Response::json(['error'=>$form->error()]);
 
                 }
 

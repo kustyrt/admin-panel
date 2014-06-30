@@ -89,6 +89,15 @@ var Ap={
     editSaveForm:function(){
         //console.log('#'+Ap.editForm)
         $('#'+Ap.editForm).submit();
+        var id = this.editRowid;
+        $('body').on('save_form',function(event,new_id){
+            if (id==0){
+                $("body").trigger("ap.create", [new_id ] );
+            }else{
+                $("body").trigger("ap.update", [id ] );
+            }
+
+        })
     },
 
     editRow:function(id){
@@ -277,22 +286,6 @@ var Ap={
             }
 
         }
-        /*
-        for(var i=0;i<ids.length;i++){
-            var cl = ids[i];
-            if ( Ap.filterUrl ){
-                var filter = "<input  type='button' value='Смотреть' onclick=Ap.filterLoad("+cl+"); ></ids>";
-            }else{
-                var filter = "";
-            }
-            if ( Ap.actionUrl ){
-                var action_title = $('#table').getCell(ids[i], 'StatusStr');
-                var action = "<input  type='button' value='"+action_title+"' onclick=Ap.actionExecute("+cl+"); ></ids>";
-            }else{
-                var action = "";
-            }
-            $("#table").setRowData(ids[i],{filter:filter,'action':action})
-        }*/
     }
 
 
