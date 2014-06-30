@@ -25,6 +25,10 @@ class Builder
         return json_encode($this->config['actions'] );
     }
 
+    public function getJsonColPages(){
+        return json_encode($this->config['pages'] );
+    }
+
     public function getJsonUrl(){
         return route('ap.json',['module'=>$this->config['config_file'],'action'=>$this->config['action']]);
     }

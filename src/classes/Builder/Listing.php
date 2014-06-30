@@ -42,14 +42,9 @@ class Listing extends Builder
             $result[$size]['editable']=true;
             $result[$size]['name']=$field['name'];
             $result[$size]['index']=$field['name'];
-            if ( isset($field['formatter']) ){
-                $js_object.=',formatter:'.$field['formatter'];
 
-                $result[$size]['formatter']=$field['formatter'];
-            }
             if ( isset($field['width']) ){
                 $js_object.=',width:'.$field['width'];
-
                 $result[$size]['width']= $field['width'];
             }
             if  (isset($model['key']) && $model['key']==$field['name'] ){
@@ -80,8 +75,10 @@ class Listing extends Builder
                 if  (isset($field['filter']) ){
                     $data[$link][$field_name] = route('ap.listing',['module'=>$field['filter'],'filter'=>$row->$field_name]);
                 }else{
-                    $data[$link][$field_name] = $row->$field_name;
+                    $field_title = !isset($field['content']) ? $row->$field_name : $field['content'];
+                    $data[$link][$field_name] = $field_title;
                 }
+
             }
         }
         return $data;
