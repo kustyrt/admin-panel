@@ -5,7 +5,8 @@ class AdminPanel
 {
     private
         $config = [
-            'actions'=>[]
+            'actions'=>[],
+            'pages'=>[]
         ],
         //$formbuilder,
         $menu = [];
@@ -159,8 +160,13 @@ class AdminPanel
                 //  поля для action
             if ( isset($config['action']) ){
                 $actions = $this->config['actions'];
-                $actions[]=['url'=>$config['action'],'name'=>$config['name'] ];
+                $actions[]=['url'=>$config['action']['url'],'key'=>$config['action']['key'],'name'=>$config['name'] ];
                 $this->setConfig('actions',$actions);
+            }
+            if ( isset($config['page']) ){
+                $page = $this->config['pages'];
+                $pages[]=['url'=>$config['page']['url'],'key'=>$config['page']['key'],'name'=>$config['name'] ];
+                $this->setConfig('pages',$pages);
             }
         }
         $this->setConfig('fields', $configs);

@@ -278,16 +278,30 @@ var Ap={
             var act = Ap.actions[i];
             for(var j in ids ){
                 var action_title = $('#table').getCell(ids[j], act.name);
-                var button = "<input  type='button' value='"+action_title+"' onclick=Ap.actionExecute("+act.url+"); ></ids>";
+                var id = $('#table').getCell(ids[j], act.key);
+                var button = "<input  type='button' value='"+action_title+"' onclick='Ap.actionExecute(\""+act.url+"\","+id+")' ></ids>";
                 var config = {};
                 config[act.name] = button;
                 $("#table").setRowData(ids[j],config)
-
             }
-
         }
+
+    },
+
+    actionExecute:function(url,id){
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: "id="+id,
+            dataType: "json",
+            success: function(answer){
+                $("#table").trigger("reloadGrid");
+            }
+        });
     }
 
 
 
+
 };
+

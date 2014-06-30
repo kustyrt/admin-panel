@@ -34,20 +34,28 @@ class Listing extends Builder
         $result = [];
         $fields = $this->panel->config('fields');
         $model = $this->panel->config('model');
+        $js_object = '[';
         foreach( $fields as $field ){
+            $js_object.='{editable:true,name:"'.$field['name'].'",index:"'.$field['name'].'"';
             $size=sizeof($result);
+
             $result[$size]['editable']=true;
             $result[$size]['name']=$field['name'];
             $result[$size]['index']=$field['name'];
+
             if ( isset($field['width']) ){
+                $js_object.=',width:'.$field['width'];
                 $result[$size]['width']= $field['width'];
             }
             if  (isset($model['key']) && $model['key']==$field['name'] ){
                 $result[$size]['key']= true;
+                $js_object.=',key:true';
             }
-
+            $js_object.='},';
         }
-        return json_encode($result,JSON_UNESCAPED_UNICODE);
+        $js_object.=']';
+
+        return $js_object;
     }
 
     public function getData(){
@@ -67,8 +75,10 @@ class Listing extends Builder
                 if  (isset($field['filter']) ){
                     $data[$link][$field_name] = route('ap.listing',['module'=>$field['filter'],'filter'=>$row->$field_name]);
                 }else{
-                    $data[$link][$field_name] = $row->$field_name;
+                    $field_title = !isset($field['content']) ? $row->$field_name : $field['content'];
+                    $data[$link][$field_name] = $field_title;
                 }
+
             }
         }
         return $data;

@@ -3,11 +3,22 @@ namespace Nifus\AdminPanel;
 
 class Field
 {
+    static $names=1000;
     private $config = [];
 
-    public function __construct($name)
+    public function __construct($name=null)
     {
+        if ( is_null($name) ){
+            $name = 'a'.self::$names;
+            self::$names++;
+        }
         $this->setConfig('name',$name);
+    }
+
+
+    public function content($title){
+        $this->setConfig('content',$title);
+        return $this;
     }
 
     public function title($title){
@@ -26,8 +37,16 @@ class Field
         return $this;
     }
 
-    public function action($url){
-        $this->setConfig('action', $url);
+    public function action($url,$key='id',$title=null){
+
+        if ( is_string($url) ){
+            $this->setConfig('action', ['url'=>$url,'key'=>$key,'title'=>$title]);
+            //$this->setConfig('formatter', 'Ap.actionButton');
+        }else{
+            $this->setConfig('page', ['url'=>$url,'key'=>$key,'title'=>$title]);
+            //$this->setConfig('formatter', 'Ap.actionButtonView');
+
+        }
         return $this;
     }
 
