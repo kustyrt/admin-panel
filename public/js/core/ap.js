@@ -88,6 +88,15 @@ var Ap={
     editSaveForm:function(){
         //console.log('#'+Ap.editForm)
         $('#'+Ap.editForm).submit();
+        var id = this.editRowid;
+        $('body').on('save_form',function(event,new_id){
+            if (id==0){
+                $("body").trigger("ap.create", [new_id ] );
+            }else{
+                $("body").trigger("ap.update", [id ] );
+            }
+
+        })
     },
 
     editRow:function(id){
@@ -275,6 +284,7 @@ var Ap={
                 $("#table").setRowData(ids[j],config)
             }
         }
+
     },
 
     actionExecute:function(url,id){
