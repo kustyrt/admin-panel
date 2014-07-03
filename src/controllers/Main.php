@@ -47,4 +47,10 @@ Class Main extends \BaseController
 
     }
 
+    function Page($module){
+        $builder = Builder\Listing::create($module);
+        //,$action,$id
+        \Log::info($builder->config());
+    }
+
 }

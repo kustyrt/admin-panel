@@ -20,7 +20,6 @@ var Ap={
     },
 
     initFilter:function(){
-
         $('body').on('click','#filter_show_button',function(){
             var status = $(this).attr('data-status');
             if ( status!='on' ){
@@ -279,6 +278,29 @@ var Ap={
     },
 
     actionExecute:function(url,id){
+
+        this.editRowid = id;
+        $('#listing').hide();
+        $('#edit_form').hide();
+
+        $.ajax({
+            type: "POST",
+            url: this.editUrl,
+            data: "id="+id,
+            dataType: "json",
+            success: function(answer){
+                if ( answer.msg ){
+                    $('#message').html(answer.msg).show();
+                    $('#message').addClass('alert-success').removeClass('alert-danger');
+                }else{
+                    $('#message').html(answer.error).show();
+                    $('#message').addClass('alert-danger').removeClass('alert-success');
+                }
+                $('#edit_form').html(answer.content).show();
+                $("body").trigger("load_edit_page", [ "id" ]);
+            }
+        });
+
         $.ajax({
             type: "POST",
             url: url,
