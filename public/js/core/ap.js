@@ -1,4 +1,5 @@
 var Ap={
+    pages:Array(),
     actions:Array(),
     filter : Array(),
     operation : Array(),
@@ -9,6 +10,7 @@ var Ap={
     filterKey:false,
     editRowid: 0,
     editForm:false,
+    module:false,
     init : function(){
         this.initEditButtons();
         this.initFilter();
@@ -20,6 +22,7 @@ var Ap={
     },
 
     initFilter:function(){
+
         $('body').on('click','#filter_show_button',function(){
             var status = $(this).attr('data-status');
             if ( status!='on' ){
@@ -88,15 +91,6 @@ var Ap={
     editSaveForm:function(){
         //console.log('#'+Ap.editForm)
         $('#'+Ap.editForm).submit();
-        var id = this.editRowid;
-        $('body').on('save_form',function(event,new_id){
-            if (id==0){
-                $("body").trigger("ap.create", [new_id ] );
-            }else{
-                $("body").trigger("ap.update", [id ] );
-            }
-
-        })
     },
 
     editRow:function(id){
@@ -199,6 +193,7 @@ var Ap={
 
     initDataTable:function(config){
         Ap.listingUrl = config.url;
+        Ap.module = config.module;
         var base_url = Ap.listingUrl;
             //  filter
 
@@ -216,6 +211,7 @@ var Ap={
         base_url  = base_url  + '&' + operation.join('&');
 
         Ap.actions = config.colActions;
+        Ap.pages = config.colPages;
        // console.log(config.url);
         var options={
             url     : base_url,
@@ -234,6 +230,7 @@ var Ap={
             gridComplete: function(){
                     Ap.makeFilterButtonsInTable();
                     Ap.makeActionButtonsInTable();
+                    Ap.makePagesButtonsInTable();
             }
         }
 
@@ -243,7 +240,6 @@ var Ap={
                 if ( !source.is('button') ){
                     Ap.editRow(id);
                 }
-
             };
             $("#table").jqGrid(options);
         }else{
@@ -272,6 +268,7 @@ var Ap={
 
 
     makeActionButtonsInTable:function(){
+
         var ids = $("#table").getDataIDs();
         for( var i in Ap.actions ){
             var act = Ap.actions[i];
@@ -284,33 +281,27 @@ var Ap={
                 $("#table").setRowData(ids[j],config)
             }
         }
+    },
 
+    makePagesButtonsInTable:function(){
+        if ( Ap.pages==undefined ){
+            return false;
+        }
+        var ids = $("#table").getDataIDs();
+        for( var i in Ap.pages ){
+            var act = Ap.pages[i];
+            for(var j in ids ){
+                var action_title = $('#table').getCell(ids[j], act.name);
+                var id = $('#table').getCell(ids[j], act.key);
+                var button = "<input  type='button' value='"+action_title+"' onclick='Ap.pageView(\""+act.name+"\","+id+")' ></ids>";
+                var config = {};
+                config[act.name] = button;
+                $("#table").setRowData(ids[j],config)
+            }
+        }
     },
 
     actionExecute:function(url,id){
-
-        this.editRowid = id;
-        $('#listing').hide();
-        $('#edit_form').hide();
-
-        $.ajax({
-            type: "POST",
-            url: this.editUrl,
-            data: "id="+id,
-            dataType: "json",
-            success: function(answer){
-                if ( answer.msg ){
-                    $('#message').html(answer.msg).show();
-                    $('#message').addClass('alert-success').removeClass('alert-danger');
-                }else{
-                    $('#message').html(answer.error).show();
-                    $('#message').addClass('alert-danger').removeClass('alert-success');
-                }
-                $('#edit_form').html(answer.content).show();
-                $("body").trigger("load_edit_page", [ "id" ]);
-            }
-        });
-
         $.ajax({
             type: "POST",
             url: url,
@@ -320,9 +311,20 @@ var Ap={
                 $("#table").trigger("reloadGrid");
             }
         });
+    },
+
+    pageView:function(name,id){
+        $.ajax({
+            type: "POST",
+            url: '/admin/page/'+Ap.module,
+            data: "id="+id+"&name="+name,
+            dataType: "json",
+            success: function(answer){
+                $('#listing').hide();
+                $('#edit_form').show().html(answer.content);
+            }
+        });
     }
-
-
 
 
 };

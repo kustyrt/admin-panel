@@ -49,8 +49,23 @@ Class Main extends \BaseController
 
     function Page($module){
         $builder = Builder\Listing::create($module);
-        //,$action,$id
-        \Log::info($builder->config());
+        $config = $builder->getField(\Input::get('name'));
+        if ( false!==$config && isset($config['page']) ){
+            $content = $config['page']['url'](\Input::get('id'),\Input::get('name'),$module);
+            return \Response::json(
+                [
+                    'content'=>$content,
+
+                ]
+            );
+        }
+
+        return \Response::json(
+            [
+                'error'=>'Not found'
+            ]
+        );
+
     }
 
 }

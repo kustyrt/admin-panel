@@ -21,6 +21,17 @@ class Builder
         return $this->config[$key];
     }
 
+    public function getField($field_name)
+    {
+        $fields = $this->config['fields'];
+        foreach( $fields as $field ){
+            if ( $field['name']==$field_name ){
+                return $field;
+            }
+        }
+        return false;
+    }
+
     public function getJsonColActions(){
         return json_encode($this->config['actions'] );
     }
@@ -32,7 +43,9 @@ class Builder
     public function getJsonUrl(){
         return route('ap.json',['module'=>$this->config['config_file'],'action'=>$this->config['action']]);
     }
-
+    public function getModule(){
+        return $this->config['config_file'];
+    }
     protected function setConfig($key,$value){
         if ( empty($key) ){
             throw new ConfigException('Пустой ключ' );
