@@ -230,6 +230,7 @@ class AdminPanel
         if ( !in_array($file,$files) ){
             $files[]=$file;
         }
+
         $this->setConfig('js', $files);
         return $this;
     }
