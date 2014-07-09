@@ -32,6 +32,16 @@ class Builder
         return false;
     }
 
+    public function getButton($name)
+    {
+        $buttons = $this->config('buttons');
+        if ( isset($buttons[$name]) ){
+            return $buttons[$name];
+        }
+
+        return false;
+    }
+
     public function getJsonColActions(){
         return json_encode($this->config['actions'] );
     }
@@ -107,6 +117,32 @@ class Builder
             return null;
         }
         return $filter_form->form_name;
+    }
+
+    public function getButtons(){
+        $configs = $this->config('buttons');
+
+        $buttons = ['create'=>['type'=>'default','id'=>'listing_add_button','title'=>'Добавить']];
+        if ( !is_null($configs) ){
+            $buttons=array_merge($buttons,$configs);
+        }
+        $result = [];
+
+        foreach( $buttons as $key=>$config ){
+            $config['class'] = !isset($config['type']) ? 'btn btn-default' : 'btn btn-'.$config['type'];
+            if ( isset($config['method']) ){
+                $config['data-button-open'] = route('ap.page',['module'=>$this->config['config_file'] ]);
+                unset($config['method']);
+            }
+            $attrs='';
+            foreach( $config as $k=>$v ){
+                $attrs.=' '.$k.'="'.$v.'"';
+            }
+            $result[$key]=['title'=>$config['title'],'attrs'=>$attrs];
+        }
+
+        return $result;
+
     }
 
 

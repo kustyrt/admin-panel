@@ -181,7 +181,6 @@ class AdminPanel
     public function filtersForm( $closure )
     {
         $this->setConfig('filter_form', $closure());
-
         return $this;
     }
 
@@ -189,19 +188,18 @@ class AdminPanel
     public function edit($flag){
         $this->setConfig('edit', $flag);
         $this->setConfig('fast_edit', true);
-
         return $this;
     }
+
     public function add($flag){
         $this->setConfig('add', $flag);
         $this->setConfig('fast_edit', true);
-
         return $this;
     }
+
     public function delete($flag){
         $this->setConfig('delete', $flag);
         $this->setConfig('fast_edit', true);
-
         return $this;
     }
 
@@ -232,6 +230,12 @@ class AdminPanel
         }
 
         $this->setConfig('js', $files);
+        return $this;
+    }
+
+    public function buttons($configs){
+
+        $this->setConfig('buttons', $configs);
         return $this;
     }
 

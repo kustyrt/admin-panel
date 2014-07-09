@@ -16,7 +16,10 @@
         <div class="row" id="listing">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <button type="button" class="btn btn-default" id="listing_add_button">Добавить</button>
+                    @foreach( $builder->getButtons() as $key=>$button )
+                        <button type="button" data-type="{{$key}}" {{$button['attrs']}}">{{$button['title']}}</button>
+                    @endforeach
+
                     @if ( $builder->hasFilter() )
                     <button type="button" class="btn btn-default" id="filter_show_button" >Фильтровать</button>
                     @endif

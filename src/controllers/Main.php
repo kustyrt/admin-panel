@@ -55,7 +55,6 @@ Class Main extends \BaseController
             return \Response::json(
                 [
                     'content'=>$content,
-
                 ]
             );
         }
@@ -65,7 +64,26 @@ Class Main extends \BaseController
                 'error'=>'Not found'
             ]
         );
+    }
 
+    function SimplePage($module){
+        $builder = Builder\Listing::create($module);
+        $config = $builder->getButton(\Input::get('name'));
+        if ( false!==$config && isset($config['method']) ){
+
+            $content = $config['method']($module);
+            return \Response::json(
+                [
+                    'content'=>$content,
+                ]
+            );
+        }
+
+        return \Response::json(
+            [
+                'error'=>'Not found'
+            ]
+        );
     }
 
 }

@@ -71,6 +71,13 @@ var Ap={
         $('body').on('click','#edit_del_button',function(){
             Ap.deleteRow(Ap.editRowid);
         });
+
+
+        $('body').on('click','button[data-button-open]',function(){
+            var datatype = $(this).attr('data-type');
+            Ap.simplePageView(datatype);
+        });
+
     },
 
     deleteRow: function(id){
@@ -318,6 +325,18 @@ var Ap={
             type: "POST",
             url: '/admin/page/'+Ap.module,
             data: "id="+id+"&name="+name,
+            dataType: "json",
+            success: function(answer){
+                $('#listing').hide();
+                $('#edit_form').show().html(answer.content);
+            }
+        });
+    },
+    simplePageView:function(name){
+        $.ajax({
+            type: "POST",
+            url: '/admin/simple_page/'+Ap.module,
+            data: "name="+name,
             dataType: "json",
             success: function(answer){
                 $('#listing').hide();

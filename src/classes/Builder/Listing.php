@@ -2,6 +2,7 @@
 Namespace Nifus\AdminPanel\Builder;
 
 Use \Nifus\AdminPanel\Builder  as Builder ;
+use Whoops\Example\Exception;
 
 class Listing extends Builder
 {
@@ -24,6 +25,9 @@ class Listing extends Builder
     public function getJsonColNames(){
         $result = [];
         $fields = $this->panel->config('fields');
+        if ( is_null($fields) ){
+            throw new \Exception('Нет столбцов для вывода');
+        }
         foreach( $fields as $field ){
             $result[]=isset($field['title']) ? $field['title'] : $field['name'];
         }
