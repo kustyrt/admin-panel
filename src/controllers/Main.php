@@ -71,7 +71,7 @@ Class Main extends \BaseController
         $config = $builder->getButton(\Input::get('name'));
         if ( false!==$config && isset($config['method']) ){
 
-            $content = $config['method']($module);
+            $content = $config['method'](\Input::get('name'),$module);
             return \Response::json(
                 [
                     'content'=>$content,

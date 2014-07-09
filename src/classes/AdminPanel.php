@@ -234,7 +234,6 @@ class AdminPanel
     }
 
     public function buttons($configs){
-
         $this->setConfig('buttons', $configs);
         return $this;
     }
