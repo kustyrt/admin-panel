@@ -248,16 +248,9 @@ var Ap={
                     Ap.editRow(id);
                 }
             };
-            $("#table").jqGrid(options);
-        }else{
-            if ( config.fast_edit ){
-                options.editurl = "server.php";
-                options.viewrecords = true;
-                $("#table").jqGrid(options);
-                $("#table").jqGrid('navGrid',"#pgwidth",{edit:true,add:false,del:false});
-                $("#table").jqGrid('inlineNav',"#pgwidth");
-            }
+
         }
+        $("#table").jqGrid(options);
 
     },
     makeFilterButtonsInTable:function(){

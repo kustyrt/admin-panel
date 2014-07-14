@@ -50,6 +50,13 @@ class Builder
         return json_encode($this->config['pages'] );
     }
 
+    public function getCustomEdit(){
+        if ( isset($this->config['edit']) &&  false===$this->config['edit'] ){
+            return 0;
+        }
+        return isset($this->config['custom_edit'] ) ? 1 : 0;
+    }
+
     public function getJsonUrl(){
         return route('ap.json',['module'=>$this->config['config_file'],'action'=>$this->config['action']]);
     }

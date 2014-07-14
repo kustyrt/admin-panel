@@ -81,7 +81,7 @@
                 'colNames' :{{$builder->getJsonColNames()}},
                 'colModel' :{{$builder->getJsonColModel()}},
                 'rowNum' :{{$builder->getRowNum()}},
-                'custom_edit' : 1,
+                'custom_edit' : {{$builder->getCustomEdit()}},
                 //'fast_edit' : 0,
                 'colActions' : {{$builder->getJsonColActions()}},
                 'colPages' : {{$builder->getJsonColPages()}},

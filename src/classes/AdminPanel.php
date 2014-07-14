@@ -187,7 +187,7 @@ class AdminPanel
 
     public function edit($flag){
         $this->setConfig('edit', $flag);
-        $this->setConfig('fast_edit', true);
+
         return $this;
     }
 
@@ -210,6 +210,8 @@ class AdminPanel
         $this->setConfig('formbuilder', $closure);
         return $this;
     }
+
+
 
     public function config($key = '')
     {
