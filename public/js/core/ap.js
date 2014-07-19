@@ -54,21 +54,21 @@ var Ap={
     },
 
     initEditButtons:function(){
-        $('body').on('click','#edit_back_button',function(){
+        $('body').on('click','button[data-id=edit_back_button]',function(){
             $("#table").trigger("reloadGrid");
             $('#listing').show();
             $('#edit_form').hide();
         });
-        $('body').on('click','#edit_refresh_button',function(){
+        $('body').on('click','button[data-id=edit_refresh_button]',function(){
             Ap.editRow(Ap.editRowid);
         });
-        $('body').on('click','#edit_save_button',function(){
+        $('body').on('click','button[data-id=edit_save_button]',function(){
             Ap.editSaveForm();
         });
-        $('body').on('click','#listing_add_button',function(){
+        $('body').on('click','button[data-id=listing_add_button]',function(){
             Ap.editRow(0);
         });
-        $('body').on('click','#edit_del_button',function(){
+        $('body').on('click','button[data-id=edit_del_button]',function(){
             Ap.deleteRow(Ap.editRowid);
         });
 
@@ -87,6 +87,9 @@ var Ap={
             data: "id="+id,
             dataType: "json",
             success: function(answer){
+                if ( answer.redirect ){
+                    window.location.href=answer.redirect;
+                }
                 $("#table").trigger("reloadGrid");
                 $('#listing').show();
                 $('#edit_form').hide();
@@ -110,6 +113,9 @@ var Ap={
             data: "id="+id,
             dataType: "json",
             success: function(answer){
+               if ( answer.redirect ){
+                   window.location.href=answer.redirect;
+               }
                 if ( answer.msg ){
                     $('#message').html(answer.msg).show();
                     $('#message').addClass('alert-success').removeClass('alert-danger');
@@ -308,6 +314,9 @@ var Ap={
             data: "id="+id,
             dataType: "json",
             success: function(answer){
+                if ( answer.redirect ){
+                    window.location.href=answer.redirect;
+                }
                 $("#table").trigger("reloadGrid");
             }
         });
@@ -320,6 +329,9 @@ var Ap={
             data: "id="+id+"&name="+name,
             dataType: "json",
             success: function(answer){
+                if ( answer.redirect ){
+                    window.location.href=answer.redirect;
+                }
                 $('#listing').hide();
                 $('#edit_form').show().html(answer.content);
             }
@@ -332,6 +344,9 @@ var Ap={
             data: "name="+name,
             dataType: "json",
             success: function(answer){
+                if ( answer.redirect ){
+                    window.location.href=answer.redirect;
+                }
                 $('#listing').hide();
                 $('#edit_form').show().html(answer.content);
             }
