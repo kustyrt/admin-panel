@@ -116,7 +116,7 @@ class Listing extends Builder
             if ( isset($_GET['operation'][$key]) ){
                 switch($_GET['operation'][$key]){
                     case('like'):
-                        $this->panel->model->where($key,'like',$value.'%');
+                        $this->panel->model->where($key,'like','%'.$value.'%');
                         break;
                 }
             }else{
