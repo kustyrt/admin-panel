@@ -129,7 +129,7 @@ class Builder
     public function getButtons(){
         $configs = $this->config('buttons');
 
-        $buttons = ['create'=>['type'=>'default','id'=>'listing_add_button','title'=>'Добавить']];
+        $buttons = ['create'=>['type'=>'default','id'=>'listing_add_button','title'=>'Добавить','data-id'=>'listing_add_button']];
         if ( !is_null($configs) ){
             $buttons=array_merge($buttons,$configs);
         }
