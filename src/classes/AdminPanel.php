@@ -50,6 +50,7 @@ class AdminPanel
     {
         $item = new MenuItem($name);
         $item->title($title);
+        $item->setUrl( route('ap.listing',$name) );
         return $item;
     }
 

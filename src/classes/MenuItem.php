@@ -5,6 +5,7 @@ class MenuItem
 {
     private $title;
     private $name;
+    private $url;
     private $sub=[];
 
     public function __construct($name){
@@ -35,11 +36,15 @@ class MenuItem
         return $this->title;
     }
     public function getUrl(){
-        return $this->name;
+        return $this->url;
     }
     public function getSub(){
         return  $this->sub;
     }
 
-
+    public function setUrl($url)
+    {
+        $this->url=$url;
+        return $this;
+    }
 }
