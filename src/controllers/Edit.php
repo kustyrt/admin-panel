@@ -2,6 +2,8 @@
 Namespace Nifus\AdminPanel;
 
 
+use Whoops\Example\Exception;
+
 Class Edit extends \BaseController
 {
 
@@ -15,6 +17,9 @@ Class Edit extends \BaseController
         $builder = \Nifus\AdminPanel\Helper::loadConfig('classes/'.$module);
 
         $form = $builder->config('formbuilder');
+        if ( is_null($form) ){
+            throw new \Exception('Нет полей для редактирования');
+        }
         $form = $form();
         $form->setId($id);
 

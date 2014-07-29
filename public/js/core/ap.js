@@ -99,7 +99,6 @@ var Ap={
     },
 
     editSaveForm:function(){
-        //console.log('#'+Ap.editForm)
         $('#'+Ap.editForm).submit();
     },
 
@@ -125,6 +124,11 @@ var Ap={
                 }
                 $('#edit_form').html(answer.content).show();
                 $("body").trigger("load_edit_page", [ "id" ]);
+            },
+            error:function(  jqXHR,  textStatus,  errorThrown ){
+                alert(jqXHR.responseJSON.error.message);
+                console.log(jqXHR.responseJSON);
+
             }
         });
     },
