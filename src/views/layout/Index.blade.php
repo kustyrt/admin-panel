@@ -57,6 +57,7 @@
 
 
 {{$js}}
+{{$css}}
 
 <script type="text/javascript">
     $(document).on('click', '.yamm .dropdown-menu', function (e) {

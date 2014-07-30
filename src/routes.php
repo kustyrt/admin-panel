@@ -56,4 +56,14 @@ View::composer('admin-panel::views.layout.Index', function($view)
         }
     }
     $view->with('js', $html);
+
+
+    $files = $structure->config('css');
+    $html = '';
+    if ( is_array($files) ){
+        foreach( $files as $file ){
+            $html.=\HTML::style($file);
+        }
+    }
+    $view->with('css', $html);
 });

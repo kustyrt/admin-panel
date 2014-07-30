@@ -235,6 +235,16 @@ class AdminPanel
         $this->setConfig('js', $files);
         return $this;
     }
+    public function includeCss($file){
+        $files = $this->config('css');
+        $files = is_array($files) ? $files : [];
+        if ( !in_array($file,$files) ){
+            $files[]=$file;
+        }
+
+        $this->setConfig('css', $files);
+        return $this;
+    }
 
     public function buttons($configs){
         $this->setConfig('buttons', $configs);

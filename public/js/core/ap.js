@@ -338,6 +338,7 @@ var Ap={
                 }
                 $('#listing').hide();
                 $('#edit_form').show().html(answer.content);
+                $("body").trigger("ap_load_page", [ "id" ]);
             }
         });
     },
