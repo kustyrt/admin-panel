@@ -136,6 +136,9 @@ class Builder
         $result = [];
 
         foreach( $buttons as $key=>$config ){
+            if ( is_null($config) ){
+                continue;
+            }
             $config['class'] = !isset($config['type']) ? 'btn btn-default' : 'btn btn-'.$config['type'];
             if ( isset($config['method']) ){
                 $config['data-button-open'] = route('ap.page',['module'=>$this->config['config_file'] ]);
@@ -147,7 +150,6 @@ class Builder
             }
             $result[$key]=['title'=>$config['title'],'attrs'=>$attrs];
         }
-
         return $result;
 
     }
