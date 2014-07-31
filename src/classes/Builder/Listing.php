@@ -63,9 +63,7 @@ class Listing extends Builder
     }
 
     public function getData(){
-        $model_config = $this->panel->config('model');
         $model = $this->panel->model;
-        //$model_config['model'];
         $this->total = $model->count();
         \Log::info($model->getQuery()->toSql());
         $rows = $model->take($this->getRowNum())->skip(($this->page-1)*$this->getRowNum());
@@ -123,6 +121,16 @@ class Listing extends Builder
                 $this->panel->model->where($key,$value);
             }
         }
+    }
+
+    public function setOrder($key,$value){
+        if ( ($key=='') ||($value=='') ){
+
+            return false;
+        }
+
+        $this->panel->model =  $this->panel->model->orderBy($key,$value);
+
     }
 
 

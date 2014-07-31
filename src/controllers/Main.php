@@ -15,7 +15,7 @@ Class Main extends \BaseController
         $builder = Builder\Listing::create($module);
         $builder->setPage( \Input::get('page') );
         $builder->setOnPage( \Input::get('rows') );
-
+        $builder->setOrder( \Input::get('sidx'),\Input::get('sord') );
         if ( \Input::has('filter') ){
             $builder->setFilter( \Input::get('filter') );
         }
