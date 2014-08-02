@@ -15,6 +15,14 @@ class MenuItem
         $this->name=$name;
     }
 
+    static function create(array $config){
+        $item = new MenuItem($config['name']);
+        foreach( $config as $key=>$value ){
+            $item->$key=$value;
+        }
+        return  $item;
+    }
+
     public function title($title){
         $this->title = $title;
     }

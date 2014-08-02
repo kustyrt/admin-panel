@@ -2,61 +2,23 @@
 namespace Nifus\AdminPanel;
 
 
-class AdminPanel
+class Structure
 {
+    public $menu;
+    private
+        $config = [];
+        ;
 
-    /**
-     * Create admin structure
-     * @param array $items
-     * @return Structure
-     * @throws \Exception
-     */
-    static function createStructure(array $items)
+
+
+    function __construct($prefix = '')
     {
-        if ( sizeof($items)==0 ){
-            throw new \Exception('Не задано меню');
+        if (!empty($prefix) && true === Helper::CheckPrefix($prefix)) {
+            $this->setConfig('prefix', $prefix);
         }
-        $admin = new Structure;
-        foreach( $items as $item ){
-            if ( is_array($item) ){
-                $admin->menu->setItem( MenuItem::create($item) );
-            }elseif( $item instanceof MenuItem ){
-                $admin->menu->setItem($item);
-            }else{
-                throw new \Exception('Неправильный формат');
-            }
-        }
-        return $admin;
+        $this->menu = new Menu;
+        $this->registerBreadcrumbs();
     }
-
-
-
-
-    /**
-     * Создаём раздел
-     * @param string $prefix
-     * @return AdminPanel
-     */
-    static function createSection($prefix = '')
-    {
-        $panel = new Section($prefix);
-        return $panel;
-    }
-
-    static function createField($name)
-    {
-        $field = new Field($name);
-        return $field;
-    }
-
-    static function createItem($name,$title='')
-    {
-        $item = new MenuItem($name);
-        $item->title($title);
-        $item->setUrl( route('ap.listing',$name) );
-        return $item;
-    }
-
 
 
 
@@ -116,6 +78,30 @@ class AdminPanel
             return null;
         }
         return $this->config[$key];
+    }
+
+
+
+
+
+    private function registerBreadcrumbs()
+    {
+        $aliases = \Config::get('app.aliases');
+        //  Если пакет стоит, то регим  хлебные крошки для стат страниц
+        if ( false===isset($aliases['Breadcrumbs']) ) {
+            return false;
+        }
+
+        \Breadcrumbs::register('ap.dashboard', function($breadcrumbs) {
+            $breadcrumbs->push('Home', '/');
+            $breadcrumbs->push('Dashboard', route('ap.main'));
+        });
+
+        \Breadcrumbs::register('ap.item.listing', function($breadcrumbs,$item) {
+            $breadcrumbs->parent('ap.dashboard');
+            $breadcrumbs->push($item->getTitle(), route('ap.listing',$item->getUrl() ) );
+        });
+
     }
 
 
