@@ -4,11 +4,23 @@ namespace Nifus\AdminPanel;
 class Helper
 {
 
-    /**
-     *
-     */
-    static function loadConfig($file){
-        $file = app_path().'/config/packages/nifus/admin-panel/'.$file.'.php';
+    static function loadStructure($structure){
+        $class = self::loadConfig($structure,true);
+        if ( false===$class || !$class instanceof Section){
+            return false;
+        }
+        $class->path($structure);
+        return $class;
+    }
+
+    static function loadConfig($file,$structure=false){
+        if ( false===$structure ){
+            $file = app_path().'/config/packages/nifus/admin-panel/'.$file.'.php';
+        }else{
+
+            $file = app_path().'/config/packages/nifus/admin-panel/classes/'.$file.'.php';
+        }
+
         if ( !file_exists($file) ){
             return false;
         }

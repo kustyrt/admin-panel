@@ -13,23 +13,32 @@ class AdminPanel
      */
     static function createStructure(array $items)
     {
+
         if ( sizeof($items)==0 ){
-            throw new \Exception('Не задано меню');
+            throw new \Exception('Не задана структура');
         }
-        $admin = new Structure;
+
+        $structure = new Structure;
         foreach( $items as $item ){
             if ( is_array($item) ){
-                $admin->menu->setItem( MenuItem::create($item) );
+                $structure->item( MenuItem::create($item) );
             }elseif( $item instanceof MenuItem ){
-                $admin->menu->setItem($item);
+                $structure->item($item);
+            }elseif(  is_string($item) ){
+                $section = Section::load($item);
+                if ( false===$section ){
+                    continue;
+                }
+                $config = [
+                    'title'=>$section->title,'url'=>$section->path
+                ];
+                $structure->item( MenuItem::create($config) );
             }else{
                 throw new \Exception('Неправильный формат');
             }
         }
-        return $admin;
+        return $structure;
     }
-
-
 
 
     /**
@@ -49,74 +58,9 @@ class AdminPanel
         return $field;
     }
 
-    static function createItem($name,$title='')
+    static function createItem($url,$title='')
     {
-        $item = new MenuItem($name);
-        $item->title($title);
-        $item->setUrl( route('ap.listing',$name) );
-        return $item;
+        return MenuItem::create(['url'=>$url,'title'=>$title]);
     }
-
-
-
-
-    public function header( $name)
-    {
-        $this->setConfig('name',$name);
-        return $this;
-    }
-    public function access( $access,$group,$user=0 )
-    {
-        $this->setConfig('access',['group'=>$group,'access'=>$access,'user'=>$user]);
-        return $this;
-    }
-
-    public function includeJs($file){
-        $files = $this->config('js');
-        $files = is_array($files) ? $files : [];
-        if ( !in_array($file,$files) ){
-            $files[]=$file;
-        }
-
-        $this->setConfig('js', $files);
-        return $this;
-    }
-    public function includeCss($file){
-        $files = $this->config('css');
-        $files = is_array($files) ? $files : [];
-        if ( !in_array($file,$files) ){
-            $files[]=$file;
-        }
-
-        $this->setConfig('css', $files);
-        return $this;
-    }
-
-    public function getMenu(){
-        return $this->menu->getMenu();
-    }
-
-
-
-    public function setConfig($key, $value)
-    {
-        if (empty($key)) {
-            throw new ConfigException('Пустой ключ');
-        }
-        $this->config[$key] = $value;
-    }
-
-
-    public function config($key = '')
-    {
-        if (empty($key)) {
-            return $this->config;
-        }
-        if (!isset($this->config[$key])) {
-            return null;
-        }
-        return $this->config[$key];
-    }
-
 
 }

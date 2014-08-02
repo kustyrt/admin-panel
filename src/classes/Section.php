@@ -2,20 +2,61 @@
 namespace Nifus\AdminPanel;
 
 
-class Section
+class Section extends Base
 {
 
     private
-        $model,
-        $config = [];
+        $model;
 
     function __construct($prefix = '')
     {
         if (!empty($prefix) && true === Helper::CheckPrefix($prefix)) {
             $this->setConfig('prefix', $prefix);
         }
-
     }
+
+    /**
+     * Загружаем секцию по названию (news/post)
+     * @param $section
+     * @return bool
+     */
+    static function load($section){
+
+        $object = Helper::loadStructure($section);
+        if ( false!==$object ){
+            $object->path=$section;
+        }
+        return $object;
+    }
+
+
+    public function getTitle(){
+        return $this->config['title'];
+    }
+
+    public function getPath(){
+        return $this->config['path'];
+    }
+
+    /**
+     * Название страницы
+     *
+     * @param $title
+     * @return $this
+     */
+    public function title($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+
+    public function path($path)
+    {
+        $this->path = $path;
+        return $this;
+    }
+
 
     public function setConfig($key, $value)
     {
@@ -50,17 +91,6 @@ class Section
         return $this;
     }
 
-    /**
-     * Название страницы
-     *
-     * @param $title
-     * @return $this
-     */
-    public function title($title)
-    {
-        $this->setConfig('name', $title);
-        return $this;
-    }
 
 
 
@@ -78,12 +108,12 @@ class Section
             }
             //  поля для action
             if ( isset($config['action']) ){
-                $actions = $this->config['actions'];
+                //$actions = $this->config['actions'];
                 $actions[]=['url'=>$config['action']['url'],'key'=>$config['action']['key'],'name'=>$config['name'] ];
                 $this->setConfig('actions',$actions);
             }
             if ( isset($config['page']) ){
-                $page = $this->config['pages'];
+                //$page = $this->config['pages'];
                 $pages[]=['url'=>$config['page']['url'],'key'=>$config['page']['key'],'name'=>$config['name'] ];
                 $this->setConfig('pages',$pages);
             }
@@ -152,6 +182,17 @@ class Section
 
     public function buttons($configs){
         $this->setConfig('buttons', $configs);
+        return $this;
+    }
+
+
+    public function includeJs($file){
+
+        return $this;
+    }
+
+    public function includeCss($file){
+
         return $this;
     }
 

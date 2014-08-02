@@ -4,11 +4,10 @@ namespace Nifus\AdminPanel;
 
 class Structure
 {
-    public $menu;
-    private
-        $config = [];
-        ;
 
+    private
+        $items = [],
+        $config = [];
 
 
     function __construct($prefix = '')
@@ -16,17 +15,26 @@ class Structure
         if (!empty($prefix) && true === Helper::CheckPrefix($prefix)) {
             $this->setConfig('prefix', $prefix);
         }
-        $this->menu = new Menu;
         $this->registerBreadcrumbs();
     }
 
-
+   /* public function configPath($path){
+        $this->setConfig('path',$path);
+        return $this;
+    }*/
 
     public function header( $name)
     {
         $this->setConfig('name',$name);
         return $this;
     }
+
+    public function item($item)
+    {
+        array_push($this->items,$item) ;
+        return $this;
+    }
+
     public function access( $access,$group,$user=0 )
     {
         $this->setConfig('access',['group'=>$group,'access'=>$access,'user'=>$user]);
@@ -43,20 +51,22 @@ class Structure
         $this->setConfig('js', $files);
         return $this;
     }
+
     public function includeCss($file){
         $files = $this->config('css');
         $files = is_array($files) ? $files : [];
         if ( !in_array($file,$files) ){
             $files[]=$file;
         }
-
         $this->setConfig('css', $files);
         return $this;
     }
 
-    public function getMenu(){
-        return $this->menu->getMenu();
+
+    public function getItems(){
+        return $this->items;
     }
+    ////////////
 
 
 
@@ -68,7 +78,6 @@ class Structure
         $this->config[$key] = $value;
     }
 
-
     public function config($key = '')
     {
         if (empty($key)) {
@@ -79,10 +88,6 @@ class Structure
         }
         return $this->config[$key];
     }
-
-
-
-
 
     private function registerBreadcrumbs()
     {
@@ -101,8 +106,6 @@ class Structure
             $breadcrumbs->parent('ap.dashboard');
             $breadcrumbs->push($item->getTitle(), route('ap.listing',$item->getUrl() ) );
         });
-
     }
-
 
 }

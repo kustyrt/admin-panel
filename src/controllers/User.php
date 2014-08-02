@@ -2,7 +2,7 @@
 Namespace Nifus\AdminPanel;
 
 
-Class User extends \BaseController
+Class CUser extends \BaseController
 {
 
     protected $layout = 'admin-panel::views.layout.login';

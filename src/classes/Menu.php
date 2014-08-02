@@ -1,22 +1,23 @@
 <?php
 namespace Nifus\AdminPanel;
 
-class Menu
+class Menu extends Base
 {
-    private $arrayMenu = [];
 
-
-
-    function setItem(MenuItem $item)
-    {
-        $this->arrayMenu[]=$item;
+    public   function __construct($items){
+        $this->items = $items;
     }
 
-    function getMenu()
+
+    public  function active($path){
+        $this->active = $path;
+    }
+
+    function getArray()
     {
         $rows = [];
-        foreach( $this->arrayMenu as $menu ){
-            $rows[]=['title'=>$menu->getTitle(),'url'=>$menu->getUrl(),'sub'=>$menu->getSub()];
+        foreach( $this->items as $item ){
+            $rows[]=['title'=>$item->title,'url'=>$item->url,'sub'=>$item->sub];
         }
         return $rows;
     }

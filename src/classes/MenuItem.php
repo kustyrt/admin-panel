@@ -1,58 +1,36 @@
 <?php
 namespace Nifus\AdminPanel;
 
-class MenuItem
-{
-    private $title;
-    private $name;
-    private $url;
-    private $sub=[];
 
-    public function __construct($name){
-        if ( false===Helper::CheckPrefix($name) ){
-            //...
-        }
-        $this->name=$name;
-    }
+class MenuItem extends Base
+{
 
     static function create(array $config){
-        $item = new MenuItem($config['name']);
-        foreach( $config as $key=>$value ){
-            $item->$key=$value;
+        $item = new MenuItem();
+        if ( empty($config['title']) ){
+            throw new \Exception('Не задан title для пункта меню');
         }
+        $item->title = $config['title'];
+        if ( empty($config['url']) ){
+            throw new \Exception('Не задан URL для пункта меню');
+        }
+        $item->url = route('ap.listing',$config['url']);
+        $sub = isset($config['sub']) ? $config['sub'] : [];
+        $item->sub($sub);
         return  $item;
     }
 
-    public function title($title){
-        $this->title = $title;
-    }
-    public function sub($sub_menu){
-        foreach( $sub_menu as $menu ){
-            $builder = Builder\Listing::create($menu);
-            if ( false===$builder ){
+    public function sub(array $menu){
+        $sub = [];
+        foreach( $menu as $item ){
+            $section = Helper::loadStructure($item);
+            if ( false===$section ){
                 continue;
             }
-            $this->sub[]=['title'=>$builder->getTitle(),'url'=>route('ap.listing',$builder->getUrl())];
+            $sub[]=['title'=>$section->title,'url'=>route('ap.listing',$section->path)];
         }
+        $this->sub = $sub;
         return $this;
     }
 
-    public function getName(){
-        return $this->name;
-    }
-    public function getTitle(){
-        return $this->title;
-    }
-    public function getUrl(){
-        return $this->url;
-    }
-    public function getSub(){
-        return  $this->sub;
-    }
-
-    public function setUrl($url)
-    {
-        $this->url=$url;
-        return $this;
-    }
 }

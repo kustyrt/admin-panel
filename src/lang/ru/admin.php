@@ -13,4 +13,10 @@ return [
 
         //  login.blade.php
     'title' => 'Авторизация',
+
+        // views/layout/inc/menu.blade.php
+    'on_main' => 'На главную',
+
+        // views/layout/inc/user.blade.php
+    'exit' => 'Выход',
 ];
