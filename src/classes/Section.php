@@ -6,7 +6,7 @@ class Section extends Base
 {
 
     private
-        $model;
+        $model,$formbuilder;
 
     function __construct($prefix = '')
     {
@@ -21,7 +21,6 @@ class Section extends Base
      * @return bool
      */
     static function load($section){
-
         $object = Helper::loadStructure($section);
         if ( false!==$object ){
             $object->path=$section;
@@ -38,6 +37,10 @@ class Section extends Base
         return $this->config['path'];
     }
 
+    public function getModel(){
+        return $this->model;
+    }
+
     /**
      * Название страницы
      *
@@ -50,7 +53,12 @@ class Section extends Base
         return $this;
     }
 
-
+    /**
+     * Ex news/posts
+     *
+     * @param $path
+     * @return $this
+     */
     public function path($path)
     {
         $this->path = $path;
@@ -58,15 +66,6 @@ class Section extends Base
     }
 
 
-    public function setConfig($key, $value)
-    {
-        if (empty($key)) {
-            throw new ConfigException('Пустой ключ');
-        }
-        $this->config[$key] = $value;
-    }
-
-    //
 
     /**
      * Устанавливаем модель
@@ -91,34 +90,47 @@ class Section extends Base
         return $this;
     }
 
-
-
-
-    public function listingFields(array $fields)
+    public function listingFields(array $fields,$dis_edit_button=false,$dis_delete_button=false )
     {
         $configs = [];
         foreach ($fields as $field) {
-            if (!$field instanceof  \Nifus\AdminPanel\Field) {
+            if ( is_string($field) ){
+                $field = Field::create(['name'=>$field]);
+            } elseif (is_array($field)) {
+                if (!isset($field['type'])) {
+                    $class = '\Nifus\AdminPanel\Field';
+                } else {
+                    $class = '\Nifus\AdminPanel\Field\\' . $field['type'];
+                }
+                if (!class_exists($class)) {
+                    throw new ConfigException('Class no exists: ' . $class);
+                }
+                $field = $class::create($field);
+
+            } elseif (!$field instanceof \Nifus\AdminPanel\Field) {
                 throw new ConfigException('\Nifus\AdminPanel\Field');
             }
-            $config = $field->getConfig();
-            $configs[] = $config;
+            $config = $field->config();
+
+
             if ( isset($config['filter_key']) ){
-                $this->setConfig('filter',['listing_url'=>$config['listing_url'],'key'=>$config['filter_key'] ]);
+                $this->filter = ['listing_url'=>$config['listing_url'],'key'=>$config['filter_key'] ];
             }
             //  поля для action
             if ( isset($config['action']) ){
                 //$actions = $this->config['actions'];
                 $actions[]=['url'=>$config['action']['url'],'key'=>$config['action']['key'],'name'=>$config['name'] ];
-                $this->setConfig('actions',$actions);
+                $this->actions = $actions;
             }
             if ( isset($config['page']) ){
                 //$page = $this->config['pages'];
                 $pages[]=['url'=>$config['page']['url'],'key'=>$config['page']['key'],'name'=>$config['name'] ];
-                $this->setConfig('pages',$pages);
+                $this->pages = $pages;
             }
+            $configs[] = $config;
         }
-        $this->setConfig('fields', $configs);
+
+        $this->fields = $configs;
         return $this;
     }
 
@@ -134,7 +146,7 @@ class Section extends Base
         if (false === is_array($array)) {
             throw new ConfigException('В качестве источника данных должен выступать массив');
         }
-        $this->setConfig('data', $array);
+        $this->data = $array;
         return $this;
     }
 
@@ -149,11 +161,11 @@ class Section extends Base
      */
     public function filtersForm( $closure )
     {
-        $this->setConfig('filter_form', $closure());
+        $this->filter_form = $closure();
         return $this;
     }
 
-
+    /*
     public function edit($flag){
         $this->setConfig('edit', $flag);
 
@@ -170,24 +182,23 @@ class Section extends Base
         $this->setConfig('delete', $flag);
         $this->setConfig('fast_edit', true);
         return $this;
-    }
+    }*/
 
     public function editFields($closure)
     {
-        $this->setConfig('custom_edit', true);
+        //$this->setConfig('custom_edit', true);
         $this->formbuilder = $closure;
         $this->setConfig('formbuilder', $closure);
         return $this;
     }
 
     public function buttons($configs){
-        $this->setConfig('buttons', $configs);
+        $this->buttons = $configs;
         return $this;
     }
 
 
     public function includeJs($file){
-
         return $this;
     }
 
@@ -195,5 +206,7 @@ class Section extends Base
 
         return $this;
     }
+
+
 
 }

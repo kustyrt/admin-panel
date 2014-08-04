@@ -5,10 +5,10 @@ Route::any('/admin/logout', ['uses'=>'\Nifus\AdminPanel\CUser@Logout','as'=>'ap.
 
 Route::group(array('before' => 'ap.auth'), function()
 {
-    Route::get('/admin', ['uses'=>'\Nifus\AdminPanel\Main@CHomepage','as'=>'ap.main']);
-    Route::get('/admin/json/{module}/{action}', ['uses'=>'\Nifus\AdminPanel\Main@Json','as'=>'ap.json'])->where('module','[A-Za-z\/_0-9]+');
-    Route::any('/admin/page/{module}', ['uses'=>'\Nifus\AdminPanel\Main@Page','as'=>'ap.page'])->where('module','[A-Za-z\/_0-9]+');
-    Route::any('/admin/simple_page/{module}', ['uses'=>'\Nifus\AdminPanel\Main@SimplePage','as'=>'ap.simple_page'])->where('module','[A-Za-z\/_0-9]+');
+    Route::get('/admin', ['uses'=>'\Nifus\AdminPanel\CMain@Homepage','as'=>'ap.main']);
+    Route::get('/admin/json/{module}/{action}', ['uses'=>'\Nifus\AdminPanel\CSection@Json','as'=>'ap.json'])->where('module','[A-Za-z\/_0-9]+');
+    Route::any('/admin/page/{module}', ['uses'=>'\Nifus\AdminPanel\CMain@Page','as'=>'ap.page'])->where('module','[A-Za-z\/_0-9]+');
+    Route::any('/admin/simple_page/{module}', ['uses'=>'\Nifus\AdminPanel\CMain@SimplePage','as'=>'ap.simple_page'])->where('module','[A-Za-z\/_0-9]+');
     Route::any('/admin/edit/{module}', ['uses'=>'\Nifus\AdminPanel\Edit@Form','as'=>'ap.json.edit_url'])->where('module','[A-Za-z\/_0-9]+');
     Route::any('/admin/delete/{module}', ['uses'=>'\Nifus\AdminPanel\Edit@Delete','as'=>'ap.json.delete_url'])->where('module','[A-Za-z\/_0-9]+');
     Route::get('/admin/{module}', ['uses'=>'\Nifus\AdminPanel\CSection@Listing','as'=>'ap.listing'])->where('module','[A-Za-z\/_0-9]+');

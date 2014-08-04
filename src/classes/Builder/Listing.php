@@ -2,7 +2,6 @@
 Namespace Nifus\AdminPanel\Builder;
 
 Use \Nifus\AdminPanel\Builder  as Builder ;
-use Whoops\Example\Exception;
 
 class Listing extends Builder
 {
@@ -11,8 +10,9 @@ class Listing extends Builder
     protected $page;
 
     static function create($config){
-        $result = \Nifus\AdminPanel\Helper::loadConfig('classes/'.$config);
-        if ( !$result instanceof \Nifus\AdminPanel\AdminPanel ){
+        $result = \Nifus\AdminPanel\Helper::loadStructure($config);
+
+        if ( !$result instanceof \Nifus\AdminPanel\Section ){
             return false;
         }
         $builder = new Builder\Listing($result);
@@ -24,11 +24,15 @@ class Listing extends Builder
 
     public function getJsonColNames(){
         $result = [];
-        $fields = $this->panel->config('fields');
+
+        $fields = $this->config('fields');
         if ( is_null($fields) ){
             throw new \Exception('Нет столбцов для вывода');
         }
+
+
         foreach( $fields as $field ){
+
             $result[]=isset($field['title']) ? $field['title'] : $field['name'];
         }
         return json_encode($result,JSON_UNESCAPED_UNICODE);
@@ -36,8 +40,8 @@ class Listing extends Builder
 
     public function getJsonColModel(){
         $result = [];
-        $fields = $this->panel->config('fields');
-        $model = $this->panel->config('model');
+        $fields = $this->config('fields');
+        $model = $this->config('model');
         $js_object = '[';
         foreach( $fields as $field ){
             $js_object.='{editable:true,name:"'.$field['name'].'",index:"'.$field['name'].'"';
@@ -63,12 +67,12 @@ class Listing extends Builder
     }
 
     public function getData(){
-        $model = $this->panel->model;
+        $model = $this->panel->getModel();
         $this->total = $model->count();
         \Log::info($model->getQuery()->toSql());
         $rows = $model->take($this->getRowNum())->skip(($this->page-1)*$this->getRowNum());
         $rows = $rows->get();
-        $fields = $this->panel->config('fields');
+        $fields = $this->panel->fields;
         $data = [];
         foreach( $rows as $row ){
             $link = sizeof($data);
@@ -91,7 +95,7 @@ class Listing extends Builder
     }
 
     public function execute(){
-        return \View::make('admin-panel::views.Main.Listing')->with('builder',$this);
+        return \View::make('admin-panel::views.Section.Listing')->with('builder',$this);
     }
 
     public function getTotal(){

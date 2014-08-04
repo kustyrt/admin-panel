@@ -5,9 +5,10 @@ class Builder
 {
     protected $panel,$config;
 
-    function __construct( \Nifus\AdminPanel\AdminPanel $panel ){
+    function __construct( \Nifus\AdminPanel\Section $panel ){
         $this->panel = $panel;
         $this->config = $this->panel->config();
+
     }
 
     public function config($key = '')
@@ -42,10 +43,16 @@ class Builder
         return false;
     }
 
+    public function existsJsonColActions(){
+        return isset($this->config['actions']) ? true : false;
+    }
     public function getJsonColActions(){
         return json_encode($this->config['actions'] );
     }
 
+    public function existsJsonColPages(){
+        return isset($this->config['pages']) ? true : false;
+    }
     public function getJsonColPages(){
         return json_encode($this->config['pages'] );
     }

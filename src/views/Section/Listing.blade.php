@@ -85,8 +85,12 @@
                 'rowNum' :{{$builder->getRowNum()}},
                 'custom_edit' : {{$builder->getCustomEdit()}},
                 //'fast_edit' : 0,
+                @if ( $builder->existsJsonColActions() )
                 'colActions' : {{$builder->getJsonColActions()}},
+                @endif
+                @if ( $builder->existsJsonColPages() )
                 'colPages' : {{$builder->getJsonColPages()}},
+                @endif
             }
         );
 

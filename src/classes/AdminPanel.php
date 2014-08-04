@@ -52,11 +52,31 @@ class AdminPanel
         return $panel;
     }
 
+    /**
+     * Create simple text
+     *
+     * @param $name
+     * @return Field
+     */
     static function createField($name)
     {
         $field = new Field($name);
         return $field;
     }
+
+    /**
+     * Create button
+     *
+     * @param null $title
+     * @return Field\Button
+     */
+    static function createFieldButton($title=null)
+    {
+        $field = new Field\Button($title);
+        return $field;
+    }
+
+
 
     static function createItem($url,$title='')
     {
