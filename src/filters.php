@@ -5,6 +5,9 @@
 Route::filter('ap.auth', function() {
 
     $structure = \Nifus\AdminPanel\Helper::loadConfig('structure');
+    if ( false===$structure ){
+        \App::abort(404,'Не найден конфиг для административной панели');
+    }
     $auth_config = $structure->config('access');
     if ( true===$auth_config['access'] ){
         $user = Sentry::getUser();
