@@ -87,6 +87,8 @@
                 //'fast_edit' : 0,
                 'colActions' : {{$builder->getJsonColActions()}},
                 'colPages' : {{$builder->getJsonColPages()}},
+                'mapping' : {{$builder->getExistsMapping()}}
+
             }
         );
 

@@ -50,6 +50,10 @@ class Builder
         return json_encode($this->config['pages'] );
     }
 
+    public function getExistsMapping(){
+        return (true===$this->config['mapping']) ? 'true' : 'false';
+    }
+
     public function getCustomEdit(){
         if ( isset($this->config['edit']) &&  false===$this->config['edit'] ){
             return 0;

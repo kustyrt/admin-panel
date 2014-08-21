@@ -65,8 +65,15 @@ class Listing extends Builder
     public function getData(){
         $model = $this->panel->model;
         $this->total = $model->count();
+        if ( false===($this->config['mapping'])){
+            $rows = $model;
+            $this->on_page = $this->total;
+        }else{
+            $rows = $model->take($this->getRowNum())->skip(($this->page-1)*$this->getRowNum());
+        }
+
         \Log::info($model->getQuery()->toSql());
-        $rows = $model->take($this->getRowNum())->skip(($this->page-1)*$this->getRowNum());
+
         $rows = $rows->get();
         $fields = $this->panel->config('fields');
         $data = [];
@@ -87,6 +94,7 @@ class Listing extends Builder
     }
 
     public function getRowNum(){
+
         return $this->on_page;
     }
 
@@ -114,11 +122,11 @@ class Listing extends Builder
             if ( isset($_GET['operation'][$key]) ){
                 switch($_GET['operation'][$key]){
                     case('like'):
-                        $this->panel->model->where($key,'like','%'.$value.'%');
+                        $this->panel->model =  $this->panel->model->where($key,'like','%'.$value.'%');
                         break;
                 }
             }else{
-                $this->panel->model->where($key,$value);
+                $this->panel->model =  $this->panel->model->where($key,$value);
             }
         }
     }
@@ -128,9 +136,7 @@ class Listing extends Builder
 
             return false;
         }
-
         $this->panel->model =  $this->panel->model->orderBy($key,$value);
-
     }
 
 

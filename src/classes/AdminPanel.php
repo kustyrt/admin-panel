@@ -5,6 +5,7 @@ class AdminPanel
 {
     private
         $config = [
+            'mapping' => true,
             'actions'=>[],
             'pages'=>[]
         ],
@@ -250,6 +251,15 @@ class AdminPanel
         $this->setConfig('buttons', $configs);
         return $this;
     }
+
+
+    public function pagenav($count){
+        if ( false===$count ){
+            $this->setConfig('mapping', false);
+        }
+        return $this;
+    }
+
 
     private function registerBreadcrumbs()
     {
