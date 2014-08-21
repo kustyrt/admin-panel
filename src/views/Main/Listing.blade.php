@@ -14,7 +14,7 @@
         <div class="alert alert-danger hide" id="message">...</div>
 
         <div class="row" id="listing">
-            @if( sizeof($builder->getButtons())>0 )
+            @if( sizeof($builder->getButtons())>0 || $builder->hasFilter() )
             <div class="panel panel-default">
                 <div class="panel-body">
                     @foreach( $builder->getButtons() as $key=>$button )

@@ -146,6 +146,13 @@ var Ap={
             }
             Ap.filter[name] = $(this).val();
         });
+        form.on('change','input',function(){
+            var name = $(this).attr('data-filter-name');
+            if ( name == undefined ){
+                name = $(this).attr('name');
+            }
+            Ap.filter[name] = $(this).val();
+        });
         form.on('keyup','input[type=text]',function(){
             var name = $(this).attr('data-filter-name');
             var operation = $(this).attr('data-operation');
@@ -168,6 +175,7 @@ var Ap={
         if ( data!=null ){
             for( i in  data ){
                 var el = form.find('*[name="'+i+'"]');
+
                 if ( el.length>0 ){
                     el.val(data[i]);
                     el.change();
@@ -178,6 +186,7 @@ var Ap={
             $('#filter_button').click();
 
         }
+
     },
 
     filterTable:function(){
