@@ -242,14 +242,15 @@ var Ap={
         var options={
             url     : base_url,
             datatype: "json",
-            jsonReader: {
+            /*jsonReader: {
                 repeatitems : false,
                 id: "0"
-            },
+            },*/
+
             height:410,
             //width:1050,
             autowidth: true,
-            rowList: [10,20,30],
+
             pager: '#pgwidth',
             colNames:config.colNames,
             colModel:config.colModel,
@@ -267,7 +268,17 @@ var Ap={
                     Ap.editRow(id);
                 }
             };
+        }
 
+        if ( config.mapping ){
+            options.jsonReader =  {
+                repeatitems : false,
+                id: "0"
+            }
+            options.rowList= [10,20,30,50,100];
+        }else{
+            options.viewrecords= true;
+            options.rowNum = 2000000000000;
         }
         $("#table").jqGrid(options);
 
