@@ -25,11 +25,12 @@ Class Main extends \BaseController
             \App::abort(404);
         }
 
+        $total = ($builder->getTotal()==0) ? 0 : ceil($builder->getTotal()/$builder->getRowNum() );
         $response = [
             'page'=> (\Input::has('page') ? \Input::get('page') : 1),
             'rows'=> $builder->getData($action),
             'records'=> $builder->getRowNum(),
-            'total'=> ceil($builder->getTotal()/$builder->getRowNum() )
+            'total'=> $total
         ];
 
         return \Response::json($response);
