@@ -51,6 +51,11 @@ class Listing extends Builder
                 $js_object.=',width:'.$field['width'];
                 $result[$size]['width']= $field['width'];
             }
+
+            if ( isset($field['align']) ){
+                $js_object.=',align:"'.$field['align'].'"';
+                $result[$size]['align']= $field['align'];
+            }
             if  (isset($model['key']) && $model['key']==$field['name'] ){
                 $result[$size]['key']= true;
                 $js_object.=',key:true';

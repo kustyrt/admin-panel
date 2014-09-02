@@ -29,6 +29,10 @@ class Field
         $this->setConfig('width',$width);
         return $this;
     }
+    public function align($align){
+        $this->setConfig('align',$align);
+        return $this;
+    }
 
     public function filter($url,$filter_key){
         $this->setConfig('listing_url',route('ap.listing',['module'=>$url]));
