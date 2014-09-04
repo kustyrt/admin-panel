@@ -78,6 +78,30 @@ var Ap={
             Ap.simplePageView(datatype);
         });
 
+        $('body').on('click','button[data-type=exel]',function(){
+            var base_url = Ap.exel_url;
+            //  filter
+            var url = [];
+            for(i in Ap.filter ){
+                url[url.length]='filter['+i+']' +'='+Ap.filter[i];
+            }
+            if ( url.length>0 ){
+                base_url  = base_url  + '?' + url.join('&');
+            }
+
+            // operation
+            var operation=[];
+            for(i in Ap.operation ){
+                operation[operation.length]='operation['+i+']' +'='+Ap.operation[i];
+            }
+            if ( operation.length>0 ){
+                base_url  = base_url  + '&' + operation.join('&');
+            }
+
+            window.location.href = base_url
+
+        });
+
     },
 
     deleteRow: function(id){
@@ -221,6 +245,7 @@ var Ap={
         Ap.listingUrl = config.url;
         Ap.module = config.module;
         var base_url = Ap.listingUrl;
+        Ap.exel_url = config.exel_url;
             //  filter
 
         var url = [];
@@ -238,7 +263,9 @@ var Ap={
 
         Ap.actions = config.colActions;
         Ap.pages = config.colPages;
-       // console.log(config.url);
+
+
+        // console.log(config.url);
         var options={
             url     : base_url,
             datatype: "json",

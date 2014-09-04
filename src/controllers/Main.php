@@ -26,9 +26,8 @@ Class Main extends \BaseController
 
         $names = $builder->getColNames();
 
-  
 
-        require_once app_path().'/classes/PHPExcel/PHPExcel.php';
+
         $cacheMethod = \PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
         $cacheSettings = array('memoryCacheSize ' => '256MB');
         \PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
