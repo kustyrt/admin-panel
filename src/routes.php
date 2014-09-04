@@ -7,6 +7,7 @@ Route::group(array('before' => 'ap.auth'), function()
 {
     Route::get('/admin', ['uses'=>'\Nifus\AdminPanel\Main@Homepage','as'=>'ap.main']);
     Route::get('/admin/json/{module}/{action}', ['uses'=>'\Nifus\AdminPanel\Main@Json','as'=>'ap.json'])->where('module','[A-Za-z\/_0-9]+');
+    Route::get('/admin/exel/{module}/{action}', ['uses'=>'\Nifus\AdminPanel\Main@Exel','as'=>'ap.exel'])->where('module','[A-Za-z\/_0-9]+');
     Route::any('/admin/page/{module}', ['uses'=>'\Nifus\AdminPanel\Main@Page','as'=>'ap.page'])->where('module','[A-Za-z\/_0-9]+');
     Route::any('/admin/simple_page/{module}', ['uses'=>'\Nifus\AdminPanel\Main@SimplePage','as'=>'ap.simple_page'])->where('module','[A-Za-z\/_0-9]+');
     Route::any('/admin/edit/{module}', ['uses'=>'\Nifus\AdminPanel\Edit@Form','as'=>'ap.json.edit_url'])->where('module','[A-Za-z\/_0-9]+');

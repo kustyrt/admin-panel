@@ -22,6 +22,18 @@ class Listing extends Builder
     }
 
 
+    public function getColNames(){
+        $result = [];
+        $fields = $this->panel->config('fields');
+        if ( is_null($fields) ){
+            throw new \Exception('Нет столбцов для вывода');
+        }
+        foreach( $fields as $field ){
+            $result[]=isset($field['title']) ? $field['title'] : $field['name'];
+        }
+        return ($result);
+    }
+
     public function getJsonColNames(){
         $result = [];
         $fields = $this->panel->config('fields');

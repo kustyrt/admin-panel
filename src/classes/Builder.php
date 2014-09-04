@@ -60,7 +60,9 @@ class Builder
         }
         return isset($this->config['custom_edit'] ) ? 1 : 0;
     }
-
+    public function getExelUrl(){
+        return route('ap.exel',['module'=>$this->config['config_file'],'action'=>$this->config['action']]);
+    }
     public function getJsonUrl(){
         return route('ap.json',['module'=>$this->config['config_file'],'action'=>$this->config['action']]);
     }

@@ -79,6 +79,7 @@
         Ap.initDataTable(
             {
                 'url': '{{$builder->getJsonUrl()}}',
+                'exel_url': '{{$builder->getExelUrl()}}',
                 'module': '{{$builder->getModule()}}',
                 'colNames' :{{$builder->getJsonColNames()}},
                 'colModel' :{{$builder->getJsonColModel()}},
