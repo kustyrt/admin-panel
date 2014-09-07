@@ -43,7 +43,7 @@ Class Main extends \BaseController
 
         $sheet = $objPHPExcel->setActiveSheetIndex(0);
 
-        $chars = 'ABCDEFGHIJKL';
+        $chars = 'ABCDEFGHIJKLMNOPRST';
         foreach($names as $i=>$name ){
             $char = $chars[$i];
             $sheet->setCellValue($char.'1', $name);
