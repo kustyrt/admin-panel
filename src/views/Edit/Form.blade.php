@@ -25,10 +25,10 @@
 
 <div class="panel panel-default">
     <div class="panel-body">
-        <button type="button" class="btn btn-default" data-id="edit_back_button">Назад</button>
-        <button type="button" class="btn btn-primary"  data-id="edit_refresh_button">Обновить</button>
-        <button type="button" class="btn btn-success"  data-id="edit_save_button">Сохранить</button>
-        <button type="button" class="btn btn-danger"  data-id="edit_del_button">Удалить</button>
+        <button type="button" class="btn btn-default" id="edit_back_button">Назад</button>
+        <button type="button" class="btn btn-primary"  id="edit_refresh_button">Обновить</button>
+        <button type="button" class="btn btn-success"  id="edit_save_button">Сохранить</button>
+        <button type="button" class="btn btn-danger"  id="edit_del_button">Удалить</button>
     </div>
 </div>
 
